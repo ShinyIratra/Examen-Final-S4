@@ -19,13 +19,14 @@
     <input type="hidden" id="id_type_pret">
     <input type="text" id="nom" placeholder="Nom">
     <input type="number" id="taux" placeholder="Taux" step="0.01">
+    <input type="number" id="duree_mois" placeholder="Durée (mois)" min="1">
     <button onclick="ajouterOuModifier()">Ajouter / Modifier</button>
   </div>
 
   <table id="table-type-prets">
     <thead>
       <tr>
-        <th>ID</th><th>Nom</th><th>Taux (Pourcentage)</th><th>Action</th>
+        <th>ID</th><th>Nom</th><th>Taux (Pourcentage)</th><th>Durée (mois)</th><th>Action</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -59,6 +60,7 @@
             <td>${e.id_type_pret}</td>
             <td>${e.nom}</td>
             <td>${e.taux}</td>
+            <td>${e.duree_mois}</td>
             <td>
               <button onclick='remplirFormulaire(${JSON.stringify(e)})'>✏️</button>
               <button onclick='supprimerEtudiant(${e.id_type_pret})'>🗑️</button>
@@ -73,10 +75,12 @@
       const id_type_pret = document.getElementById("id_type_pret").value;
       const nom = document.getElementById("nom").value;
       const taux = document.getElementById("taux").value;
+      const duree_mois = document.getElementById("duree_mois").value;
 
       const dataObj = {
         nom,
         taux,
+        duree_mois,
       };
 
       if (id_type_pret) {
@@ -96,6 +100,7 @@
       document.getElementById("id_type_pret").value = e.id_type_pret;
       document.getElementById("nom").value = e.nom;
       document.getElementById("taux").value = e.taux;
+      document.getElementById("duree_mois").value = e.duree_mois;
     }
 
     function supprimerEtudiant(id_type_pret) {
@@ -110,6 +115,7 @@
       document.getElementById("id_type_pret").value = "";
       document.getElementById("nom").value = "";
       document.getElementById("taux").value = "";
+      document.getElementById("duree_mois").value = "";
     }
 
     chargerTypePret();
