@@ -5,7 +5,7 @@ Etape 1 :
 
     Prerequis :
         ✔ Généraliser requête @started(25-07-07 11:20) @done(25-07-07 11:51) @lasted(31m)
-        ☐ Refactorisation code (pour simplifier)
+        ✔ Refactorisation code (pour simplifier) @done(25-07-07 12:49)
 
     - Ajout de fond dans l'établissement financier (EF) :
         ☐ (Page admin) Admin mampiditra vola anatiny ilay 
