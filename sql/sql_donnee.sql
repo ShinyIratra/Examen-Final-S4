@@ -5,19 +5,16 @@ INSERT INTO EF_utilisateur (nom, mdp, identifiant) VALUES
 ('User2', '123', 'user2');
 
 -- Types de prêt
-INSERT INTO EF_type_pret (nom, taux, duree_mois) VALUES
-('Immobilier', 2.50, 240),
-('Consommation', 4.20, 60),
-('Auto', 3.10, 48);
+INSERT INTO EF_type_pret (nom, taux, duree_mois) VALUES ('Etudiant', 6, 24 );
 
 -- Clients (liés aux utilisateurs)
 INSERT INTO EF_client (id_utilisateur) VALUES
-(1),
-(2);
+(2),
+(3);
 
 -- Admins (liés aux utilisateurs)
 INSERT INTO EF_admin (id_utilisateur) VALUES
-(3);
+(1);
 
 ----------------------------
 -- DONNEE LIE TRANSACTION --
