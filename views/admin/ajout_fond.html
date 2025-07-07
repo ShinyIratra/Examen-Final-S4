@@ -90,16 +90,9 @@
           chargerDepot();
         });
       } else {
-          ajax("POST", "/depot", JSON.stringify(dataObj), (response) => {
-          if (response && response.id) {
-            ajax("POST", "/fond", JSON.stringify({ id_depot: response.id }), () => {
-              resetForm();
-              chargerDepot();
-            });
-          } else {
-            resetForm();
-            chargerDepot();
-          }
+        ajax("POST", "/depot", JSON.stringify(dataObj), () => {
+          resetForm();
+          chargerDepot();
         });
       }
     }
