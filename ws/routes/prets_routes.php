@@ -5,6 +5,8 @@ $PretsController = new ObjetController('ef_pret', 'id_pret', [
     'montant' => 0.0,
     'date_pret' => '',
     'date_retour' => '',
+    'assurance' => 0,
+    'delai' => 0,
     'id_client' => 0,
     'id_type_pret' => 0,
 ]);

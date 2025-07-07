@@ -32,6 +32,8 @@
       <input type="number" id="montant" placeholder="Montant" step="0.01">
       <input type="date" id="date_pret" placeholder="Date du prêt">
       <input type="date" id="date_retour" placeholder="Date de retour">
+      <input type="number" id="assurance" placeholder="Assurance" step="0.01">
+      <input type="number" id="delai" placeholder="Delai" step="1" min="0">
       <button onclick="ajouterOuModifier()">Ajouter / Modifier</button>
       <button onclick="resetForm()">Réinitialiser</button>
     </div>
@@ -43,6 +45,8 @@
           <th>Montant</th>
           <th>Date Prêt</th>
           <th>Date Retour</th>
+          <th> Assurance </th>
+          <th> Délai </th>
           <th>ID Client</th>
           <th>ID Type Prêt</th>
           <th>Action</th>
@@ -108,6 +112,8 @@
               <td>${e.montant}</td>
               <td>${e.date_pret || ""}</td>
               <td>${e.date_retour || ""}</td>
+              <td>${e.assurance}</td>
+              <td>${e.delai}</td>
               <td>${e.id_client}</td>
               <td>${e.id_type_pret}</td>
               <td>
@@ -125,10 +131,12 @@
         const id_client = document.getElementById("id_client").value;
         const id_type_pret = document.getElementById("id_type_pret").value;
         const montant = document.getElementById("montant").value;
+        const assurance = document.getElementById("assurance").value;
+        const delai = document.getElementById("delai").value;
         const date_pret = document.getElementById("date_pret").value;
         const date_retour = document.getElementById("date_retour").value;
 
-        if (!id_client || !id_type_pret || !montant) {
+        if (!id_client || !id_type_pret || !montant || !assurance || !delai) {
           alert("Veuillez remplir tous les champs obligatoires.");
           return;
         }
@@ -137,6 +145,8 @@
           id_client,
           id_type_pret,
           montant,
+          assurance,
+          delai,
           date_pret,
           date_retour
         };
@@ -159,6 +169,8 @@
         document.getElementById("id_client").value = e.id_client;
         document.getElementById("id_type_pret").value = e.id_type_pret;
         document.getElementById("montant").value = e.montant;
+        document.getElementById("assurance").value = e.assurance;
+        document.getElementById("delai").value = e.delai;
         document.getElementById("date_pret").value = e.date_pret || "";
         document.getElementById("date_retour").value = e.date_retour || "";
       }
@@ -176,6 +188,8 @@
         document.getElementById("id_client").value = "";
         document.getElementById("id_type_pret").value = "";
         document.getElementById("montant").value = "";
+        document.getElementById("assurance").value = "";
+        document.getElementById("delai").value = "";
         document.getElementById("date_pret").value = "";
         document.getElementById("date_retour").value = "";
       }
