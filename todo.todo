@@ -1,4 +1,4 @@
-Etape 1 :
+Etape 2 :
     ✔ start @started(25-07-07 10:53) @done(25-07-07 10:53) @lasted(57s)
     ✔ done @done(25-07-07 10:53)
     ✘ cancelled @cancelled(25-07-07 10:53)
@@ -18,3 +18,6 @@ Etape 1 :
         ☐ Argent final à payer avec le prix
     - Gestion de prêt pour les clients
         ☐ (Page Clients) Pouvoir faire des prêts
+
+Etape 3 :
+     ☐ Refonte complète structure @started(25-07-07 14:37)
