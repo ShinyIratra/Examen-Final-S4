@@ -36,9 +36,8 @@
   <a href="test.html"> Test </a> <br>
   <a href="admin/type_pret.html"> Prêt </a>
 
+  <script src="../env.js"></script>
   <script>
-    const apiBase = "http://localhost/tp-flightphp-crud/ws";
-
     function ajax(method, url, data, callback) {
       const xhr = new XMLHttpRequest();
       xhr.open(method, apiBase + url, true);
