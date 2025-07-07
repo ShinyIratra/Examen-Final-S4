@@ -1,1 +1,1 @@
-const apiBase = "http://localhost/tp-flightphp-crud/ws";
+const apiBase = "http://localhost/Examen-Final-S4/ws";
