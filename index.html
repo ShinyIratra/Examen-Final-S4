@@ -34,12 +34,16 @@
   </table>
 
   <script>
-    const apiBase = "http://localhost:8888/tp-flightphp-crud/ws";
+    const apiBase = "http://localhost/tp-flightphp-crud/ws";
 
     function ajax(method, url, data, callback) {
       const xhr = new XMLHttpRequest();
       xhr.open(method, apiBase + url, true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      if (method === "PUT" || method === "POST") {
+        xhr.setRequestHeader("Content-Type", "application/json");
+      } else {
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      }
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
           callback(JSON.parse(xhr.responseText));
@@ -77,15 +81,20 @@
       const email = document.getElementById("email").value;
       const age = document.getElementById("age").value;
 
-      const data = `nom=${encodeURIComponent(nom)}&prenom=${encodeURIComponent(prenom)}&email=${encodeURIComponent(email)}&age=${age}`;
+      const dataObj = {
+        nom,
+        prenom,
+        email,
+        age
+      };
 
       if (id) {
-        ajax("PUT", `/etudiants/${id}`, data, () => {
+        ajax("PUT", `/etudiants/${id}`, JSON.stringify(dataObj), () => {
           resetForm();
           chargerEtudiants();
         });
       } else {
-        ajax("POST", "/etudiants", data, () => {
+        ajax("POST", "/etudiants", JSON.stringify(dataObj), () => {
           resetForm();
           chargerEtudiants();
         });
