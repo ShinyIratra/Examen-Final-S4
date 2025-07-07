@@ -1,12 +1,14 @@
-    <nav class="sidebar close">
+<nav class="sidebar close">
         <header>
             <div class="image-text">
                 <span class="image">
-                    <!--<img src="logo.png" alt="">-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="currentColor" class="bank-logo">
+                        <path d="M11.5,1L2,6v2h19V6L11.5,1z M4,10h1v7H4V10z M7,10h1v7H7V10z M10,10h1v7h-1V10z M13,10h1v7h-1V10z M16,10h1v7h-1V10z M19,10h1v7h-1V10z M2,19v2h19v-2H2z"/>
+                    </svg>
                 </span>
                 <div class="text logo-text">
-                    <span class="name">BankApi</span>
-                    <span class="profession">API Banque</span>
+                    <span class="name">FinanceHub</span>
+                    <span class="profession">Gestion Bancaire</span>
                 </div>
             </div>
             <i class='bx bx-chevron-right toggle'></i>
@@ -26,25 +28,25 @@
                     </li>
                     <li class="nav-link">
                         <a href="../admin/ajout_fond.php">
-                            <i class='bx bx-bar-chart-alt-2 icon' ></i>
+                            <i class='bx bx-money icon' ></i>
                             <span class="text nav-text">Ajout Fond</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="../admin/pret.php">
-                            <i class='bx bx-bell icon'></i>
+                            <i class='bx bx-dollar-circle icon'></i>
                             <span class="text nav-text">Ajouter Pret</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="../admin/type_pret.php">
-                            <i class='bx bx-pie-chart-alt icon' ></i>
+                            <i class='bx bx-category icon' ></i>
                             <span class="text nav-text">Type Pret</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="../admin/list_pret_non_valide.php">
-                            <i class='bx bx-heart icon' ></i>
+                            <i class='bx bx-x-circle icon' ></i>
                             <span class="text nav-text">Pret Non Valide</span>
                         </a>
                     </li>

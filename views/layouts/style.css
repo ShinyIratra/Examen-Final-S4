@@ -98,13 +98,18 @@ body.dark{
 }
 header .image-text .name {
     margin-top: 2px;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-color);
+    letter-spacing: 0.5px;
 }
 header .image-text .profession{
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 500;
     margin-top: -2px;
     display: block;
+    color: var(--text-color);
+    opacity: 0.8;
 }
 .sidebar header .image{
     display: flex;
@@ -113,7 +118,10 @@ header .image-text .profession{
 }
 .sidebar header .image img{
     width: 40px;
-    border-radius: 6px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 .sidebar header .toggle{
     position: absolute;
@@ -320,4 +328,19 @@ body.dark .main-content button {
     background-color: #3a3b3c;
     color: #ccc;
     border: 1px solid #555;
+}
+
+/* SVG Bank Logo styling */
+.bank-logo {
+    color: var(--primary-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    padding: 5px;
+    background-color: var(--sidebar-color);
+}
+
+body.dark .bank-logo {
+    color: var(--text-color);
 }
