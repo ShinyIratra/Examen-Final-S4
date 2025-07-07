@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../controllers/ObjetController.php';
+require_once __DIR__ . '/../controllers/PretController.php';
 
-$PretsController = new ObjetController('ef_pret', 'id_pret', [
+$PretsController = new PretController('ef_pret', 'id_pret', [
     'montant' => 0.0,
     'date_pret' => '',
     'date_retour' => '',
@@ -12,7 +12,13 @@ $PretsController = new ObjetController('ef_pret', 'id_pret', [
 ]);
 
 Flight::route('GET /prets', [$PretsController, 'getAll']);
+Flight::route('GET /prets/tri/@ordre', function($ordre) use ($PretsController) {
+    $croissant = $ordre === 'asc';
+    $PretsController->getAllDescByColonne("date_pret", $croissant);
+});
+Flight::route('GET /prets/invalides/desc', [$PretsController, 'getPretInvalideById']);
 Flight::route('GET /prets/@id', [$PretsController, 'getById']);
 Flight::route('POST /prets', [$PretsController, 'create']);
+Flight::route('POST /prets/valide/@id', [$PretsController, 'validePret']);
 Flight::route('PUT /prets/@id', [$PretsController, 'update']);
 Flight::route('DELETE /prets/@id', [$PretsController, 'delete']);
