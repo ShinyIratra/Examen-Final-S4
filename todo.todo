@@ -6,10 +6,13 @@ Etape 1 :
     Prerequis :
         ✔ Généraliser requête @started(25-07-07 11:20) @done(25-07-07 11:51) @lasted(31m)
         ✔ Refactorisation code (pour simplifier) @done(25-07-07 12:49)
-
+        ✔ Création de la base de données @done(25-07-07 12:49)
+        ✔ Création des tables @done(25-07-07 12:49)
+        ✔ Création des données @done(25-07-07 12:49)
+        
     - Ajout de fond dans l'établissement financier (EF) :
-        ☐ (Page admin) Admin mampiditra vola anatiny ilay 
-        ☐ Vola anatiny ilay établissement financer par rapport @ vola nampidirina tao
+        ☐ (Page admin) Admin mampiditra vola anatiny ilay vola anatiny 
+        ilay établissement financer par rapport @ vola nampidirina tao
     - Création type de prêt avec différent taux :
         ☐ (Page admin) misy CRUD ana Pret disponible de afaka mifidy taux
         ☐ Argent final à payer avec le prix
