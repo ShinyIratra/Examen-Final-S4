@@ -29,7 +29,6 @@ CREATE TABLE EF_type_pret(
    PRIMARY KEY(id_type_pret)
 );
 
-
 CREATE TABLE EF_client(
    id_client INT AUTO_INCREMENT,
    id_utilisateur INT NOT NULL,
@@ -44,13 +43,6 @@ CREATE TABLE EF_depot(
    id_utilisateur INT NOT NULL,
    PRIMARY KEY(id_depot),
    FOREIGN KEY(id_utilisateur) REFERENCES EF_utilisateur(id_utilisateur)
-);
-
-CREATE TABLE EF_fond(
-   id_fond INT AUTO_INCREMENT,
-   id_depot INT NOT NULL,
-   PRIMARY KEY(id_fond),
-   FOREIGN KEY(id_depot) REFERENCES EF_depot(id_depot)
 );
 
 CREATE TABLE EF_admin(
@@ -71,3 +63,4 @@ CREATE TABLE EF_pret(
    FOREIGN KEY(id_client) REFERENCES EF_client(id_client),
    FOREIGN KEY(id_type_pret) REFERENCES EF_type_pret(id_type_pret)
 );
+
