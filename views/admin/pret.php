@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestion des prêts</title>
+  <style>
+    input, button, select { margin: 5px; padding: 5px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+  </style>
+  <!----======== CSS ======== -->
+  <link rel="stylesheet" href="../layouts/style.css">
+  <!----===== Boxicons CSS ===== -->
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+  <?php
+    require '../layouts/sidebar.php';
+  ?>
+
+  <div class="main-content">
+    <h1>Gestion des prêts</h1>
+
+    <div>
+      <input type="hidden" id="pret_id">
+      <input list="clients" id="id_client" placeholder="Choisir un client">
+      <datalist id="clients"></datalist>
+      <select id="id_type_pret">
+        <option value="">Veuillez choisir un type de prêt</option>
+      </select>
+      <input type="number" id="montant" placeholder="Montant" step="0.01">
+      <input type="date" id="date_pret" placeholder="Date du prêt">
+      <input type="date" id="date_retour" placeholder="Date de retour">
+      <button onclick="ajouterOuModifier()">Ajouter / Modifier</button>
+      <button onclick="resetForm()">Réinitialiser</button>
+    </div>
+
+    <table id="table-prets">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Montant</th>
+          <th>Date Prêt</th>
+          <th>Date Retour</th>
+          <th>ID Client</th>
+          <th>ID Type Prêt</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script src="../env.js"></script>
+    <script>
+      function ajax(method, url, data, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, apiBase + url, true);
+        if (method === "PUT" || method === "POST") {
+          xhr.setRequestHeader("Content-Type", "application/json");
+        }
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            callback(JSON.parse(xhr.responseText));
+          }
+        };
+        xhr.send(data);
+      }
+
+      // Remplir le datalist des clients
+      function chargerClients() {
+        ajax("GET", "/clients/details", null, (data) => {
+          const datalist = document.getElementById("clients");
+          datalist.innerHTML = '';
+          data.forEach(e => {
+            const option = document.createElement("option");
+            option.value = e.id_client;
+            option.label = e.nom + " (" + e.identifiant + ")";
+            option.textContent = e.nom + " (" + e.identifiant + ")";
+            datalist.appendChild(option);
+          });
+        });
+      }
+
+      // Remplir le select des types de prêts
+      function chargerTypePrets() {
+        ajax("GET", "/type-prets", null, (data) => {
+          const select = document.getElementById("id_type_pret");
+          select.innerHTML = '<option value="">Veuillez choisir un type de prêt</option>';
+          data.forEach(e => {
+            const option = document.createElement("option");
+            option.value = e.id_type_pret;
+            option.textContent = e.nom;
+            select.appendChild(option);
+          });
+        });
+      }
+
+      // Charger la liste des prêts
+      function chargerPrets() {
+        ajax("GET", "/prets", null, (data) => {
+          const tbody = document.querySelector("#table-prets tbody");
+          tbody.innerHTML = "";
+          data.forEach(e => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${e.id_pret}</td>
+              <td>${e.montant}</td>
+              <td>${e.date_pret || ""}</td>
+              <td>${e.date_retour || ""}</td>
+              <td>${e.id_client}</td>
+              <td>${e.id_type_pret}</td>
+              <td>
+                <button onclick='remplirFormulaire(${JSON.stringify(e)})'>✏️</button>
+                <button onclick='supprimerPret(${e.id_pret})'>🗑️</button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        });
+      }
+
+      function ajouterOuModifier() {
+        const id = document.getElementById("pret_id").value;
+        const id_client = document.getElementById("id_client").value;
+        const id_type_pret = document.getElementById("id_type_pret").value;
+        const montant = document.getElementById("montant").value;
+        const date_pret = document.getElementById("date_pret").value;
+        const date_retour = document.getElementById("date_retour").value;
+
+        if (!id_client || !id_type_pret || !montant) {
+          alert("Veuillez remplir tous les champs obligatoires.");
+          return;
+        }
+
+        const dataObj = {
+          id_client,
+          id_type_pret,
+          montant,
+          date_pret,
+          date_retour
+        };
+
+        if (id) {
+          ajax("PUT", `/prets/${id}`, JSON.stringify(dataObj), () => {
+            resetForm();
+            chargerPrets();
+          });
+        } else {
+          ajax("POST", "/prets", JSON.stringify(dataObj), () => {
+            resetForm();
+            chargerPrets();
+          });
+        }
+      }
+
+      function remplirFormulaire(e) {
+        document.getElementById("pret_id").value = e.id_pret;
+        document.getElementById("id_client").value = e.id_client;
+        document.getElementById("id_type_pret").value = e.id_type_pret;
+        document.getElementById("montant").value = e.montant;
+        document.getElementById("date_pret").value = e.date_pret || "";
+        document.getElementById("date_retour").value = e.date_retour || "";
+      }
+
+      function supprimerPret(id) {
+        if (confirm("Supprimer ce prêt ?")) {
+          ajax("DELETE", `/prets/${id}`, null, () => {
+            chargerPrets();
+          });
+        }
+      }
+
+      function resetForm() {
+        document.getElementById("pret_id").value = "";
+        document.getElementById("id_client").value = "";
+        document.getElementById("id_type_pret").value = "";
+        document.getElementById("montant").value = "";
+        document.getElementById("date_pret").value = "";
+        document.getElementById("date_retour").value = "";
+      }
+
+      // Initialisation
+      chargerClients();
+      chargerTypePrets();
+      chargerPrets();
+    </script>
+  </div>
+</body>
+</html>

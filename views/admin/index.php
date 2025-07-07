@@ -4,36 +4,47 @@
   <meta charset="UTF-8">
   <title>Gestion des étudiants</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; }
     input, button { margin: 5px; padding: 5px; }
     table { border-collapse: collapse; width: 100%; margin-top: 20px; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
     th { background-color: #f2f2f2; }
   </style>
+  <!----======== CSS ======== -->
+<link rel="stylesheet" href="../layouts/style.css">
+
+<!----===== Boxicons CSS ===== -->
+<link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 <body>
+  <?php
+    require '../layouts/sidebar.php';
+  ?>
+  
+  <div class="main-content">
+    <h1>Gestion des étudiants</h1>
 
-  <h1>Gestion des étudiants</h1>
+    <div>
+      <input type="hidden" id="id">
+      <input type="text" id="nom" placeholder="Nom">
+      <input type="text" id="prenom" placeholder="Prénom">
+      <input type="email" id="email" placeholder="Email">
+      <input type="number" id="age" placeholder="Âge">
+      <button onclick="ajouterOuModifier()">Ajouter / Modifier</button>
+    </div>
 
-  <div>
-    <input type="hidden" id="id">
-    <input type="text" id="nom" placeholder="Nom">
-    <input type="text" id="prenom" placeholder="Prénom">
-    <input type="email" id="email" placeholder="Email">
-    <input type="number" id="age" placeholder="Âge">
-    <button onclick="ajouterOuModifier()">Ajouter / Modifier</button>
+    <table id="table-etudiants">
+      <thead>
+        <tr>
+          <th>ID</th><th>Nom</th><th>Prénom</th><th>Email</th><th>Âge</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <a href="test.html"> Test </a>
   </div>
-
-  <table id="table-etudiants">
-    <thead>
-      <tr>
-        <th>ID</th><th>Nom</th><th>Prénom</th><th>Email</th><th>Âge</th><th>Actions</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <a href="test.html"> Test </a>
+  
   <script src="../env.js"></script>
   <script>
     function ajax(method, url, data, callback) {
