@@ -11,8 +11,7 @@ Etape 2 :
         ✔ Création des données @done(25-07-07 12:49)
         
     - Ajout de fond dans l'établissement financier (EF) :
-        ☐ (Page admin) Admin mampiditra vola anatiny ilay vola anatiny 
-        ilay établissement financer par rapport @ vola nampidirina tao
+        ☐ (Page admin) Admin mampiditra vola anatiny ilay établissement financer 
     - Création type de prêt avec différent taux :
         ✔ (Page admin) misy CRUD ana Pret disponible de afaka mifidy taux @done(25-07-07 13:53)
         ☐ Argent final à payer avec le prix
