@@ -25,8 +25,10 @@ CREATE TABLE EF_type_pret(
    id_type_pret INT AUTO_INCREMENT,
    nom VARCHAR(255)  NOT NULL,
    taux DECIMAL(15,2)   NOT NULL,
+   duree_mois INT NOT NULL,
    PRIMARY KEY(id_type_pret)
 );
+
 
 CREATE TABLE EF_client(
    id_client INT AUTO_INCREMENT,
