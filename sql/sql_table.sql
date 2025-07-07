@@ -58,6 +58,7 @@ CREATE TABLE EF_pret(
    date_pret DATETIME NOT NULL,
    date_retour DATETIME NOT NULL,
    assurance DECIMAL(15,2)   DEFAULT 0,
+   delai INT DEFAULT 0,
    id_client INT NOT NULL,
    id_type_pret INT NOT NULL,
    PRIMARY KEY(id_pret),
@@ -84,4 +85,3 @@ CREATE TABLE EF_pret_valide(
    PRIMARY KEY(id_pret_valide),
    FOREIGN KEY(id_pret) REFERENCES EF_pret(id_pret)
 );
-
