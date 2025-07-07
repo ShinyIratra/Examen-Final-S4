@@ -14,7 +14,7 @@ Etape 1 :
         ☐ (Page admin) Admin mampiditra vola anatiny ilay vola anatiny 
         ilay établissement financer par rapport @ vola nampidirina tao
     - Création type de prêt avec différent taux :
-        ☐ (Page admin) misy CRUD ana Pret disponible de afaka mifidy taux
+        ✔ (Page admin) misy CRUD ana Pret disponible de afaka mifidy taux @done(25-07-07 13:53)
         ☐ Argent final à payer avec le prix
     - Gestion de prêt pour les clients
         ☐ (Page Clients) Pouvoir faire des prêts
