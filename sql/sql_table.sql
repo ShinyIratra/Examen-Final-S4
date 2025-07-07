@@ -25,6 +25,7 @@ CREATE TABLE EF_type_pret(
    id_type_pret INT AUTO_INCREMENT,
    nom VARCHAR(255)  NOT NULL,
    taux DECIMAL(15,2)   NOT NULL,
+   duree_mois INT NOT NULL,
    PRIMARY KEY(id_type_pret)
 );
 
@@ -42,13 +43,6 @@ CREATE TABLE EF_depot(
    id_utilisateur INT NOT NULL,
    PRIMARY KEY(id_depot),
    FOREIGN KEY(id_utilisateur) REFERENCES EF_utilisateur(id_utilisateur)
-);
-
-CREATE TABLE EF_fond(
-   id_fond INT AUTO_INCREMENT,
-   id_depot INT NOT NULL,
-   PRIMARY KEY(id_fond),
-   FOREIGN KEY(id_depot) REFERENCES EF_depot(id_depot)
 );
 
 CREATE TABLE EF_admin(

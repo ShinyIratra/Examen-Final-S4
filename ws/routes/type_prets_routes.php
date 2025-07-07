@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/../controllers/ObjetController.php';
 
-$TypePretsController = new ObjetController('type_pret', 'id_type_pret', [
+$TypePretsController = new ObjetController('EF_type_pret', 'id_type_pret', [
     'nom' => '',
-    'taux' => 0.0
+    'taux' => 0.0,
 ]);
 
 Flight::route('GET /type-prets', [$TypePretsController, 'getAll']);
