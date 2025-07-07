@@ -57,10 +57,31 @@ CREATE TABLE EF_pret(
    montant DECIMAL(15,2)   NOT NULL,
    date_pret DATETIME NOT NULL,
    date_retour DATETIME NOT NULL,
+   assurance DECIMAL(15,2)   DEFAULT 0,
    id_client INT NOT NULL,
    id_type_pret INT NOT NULL,
    PRIMARY KEY(id_pret),
    FOREIGN KEY(id_client) REFERENCES EF_client(id_client),
    FOREIGN KEY(id_type_pret) REFERENCES EF_type_pret(id_type_pret)
+);
+
+CREATE TABLE EF_remboursement(
+   id_remboursement INT AUTO_INCREMENT,
+   montant DECIMAL(15,2)   NOT NULL,
+   date_remboursement DATE NOT NULL,
+   interet DECIMAL(15,2)   NOT NULL,
+   capital DECIMAL(15,2)   NOT NULL,
+   isPaid BOOLEAN NOT NULL DEFAULT FASLE,
+   date_payement DATE,
+   id_pret INT NOT NULL,
+   PRIMARY KEY(id_remboursement),
+   FOREIGN KEY(id_pret) REFERENCES EF_pret(id_pret)
+);
+
+CREATE TABLE EF_pret_valide(
+   id_pret_valide INT AUTO_INCREMENT,
+   id_pret INT NOT NULL,
+   PRIMARY KEY(id_pret_valide),
+   FOREIGN KEY(id_pret) REFERENCES EF_pret(id_pret)
 );
 
