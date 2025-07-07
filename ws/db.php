@@ -1,7 +1,7 @@
 <?php
 function getDB() {
     $host = 'localhost';
-    $dbname = 'tp_flight';
+    $dbname = 'db_s2_ETU003332';
     $username = 'root';
     $password = '';
 
