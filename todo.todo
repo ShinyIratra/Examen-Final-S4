@@ -11,7 +11,7 @@ Etape 2 :
         ✔ Création des données @done(25-07-07 12:49)
         
     - Ajout de fond dans l'établissement financier (EF) :
-        ☐ (Page admin) Admin mampiditra vola anatiny ilay établissement financer 
+        ✔ (Page admin) Admin mampiditra vola anatiny ilay établissement financer @done(25-07-07 16:28)
     - Création type de prêt avec différent taux :
         ✔ (Page admin) misy CRUD ana Pret disponible de afaka mifidy taux @done(25-07-07 13:53)
         ☐ Argent final à payer avec le prix
@@ -20,3 +20,5 @@ Etape 2 :
 
 Etape 3 :
      ✔ Refonte complète structure @started(25-07-07 14:37) @done(25-07-07 15:21) @lasted(44m14s)
+    - ☐ Tableau pour afficher les interets gagnés par mois pour l'EF(avec filtre mois et année debut et fin)
+        ☐ creation de graphique à partir du tableau
