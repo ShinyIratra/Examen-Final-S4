@@ -28,4 +28,10 @@ insert('etudiants', 'etudiant', ['nom' => '', 'prenom' => '', 'email' => '', 'ag
 update('etudiants', 'etudiant', ['nom' => '', 'prenom' => '', 'email' => '', 'age' => 0], 'id');
 delete('etudiants', 'etudiant', 'id');
 
+getAll('type-prets', 'EF_type_pret');
+getById('type-prets', 'EF_type_pret', 'id_type_pret');
+insert('type-prets', 'EF_type_pret', ['nom' => '', 'taux' => 0.0]);
+update('type-prets', 'EF_type_pret', ['nom' => '', 'taux' => 0.0], 'id_type_pret');
+delete('type-prets', 'EF_type_pret', 'id_type_pret');
+
 Flight::start();

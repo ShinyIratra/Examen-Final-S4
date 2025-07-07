@@ -2,6 +2,16 @@ drop database db_s2_ETU003332;
 CREATE DATABASE db_s2_ETU003332 CHARACTER SET utf8mb4;
 USE db_s2_ETU003332;
 
+--- Fafana kelikelya any ---
+CREATE TABLE etudiant (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100),
+    prenom VARCHAR(100),
+    email VARCHAR(100),
+    age INT
+);
+---
+
 CREATE TABLE EF_utilisateur(
    id_utilisateur INT AUTO_INCREMENT,
    nom VARCHAR(255)  NOT NULL,
