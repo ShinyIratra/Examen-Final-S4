@@ -27,7 +27,8 @@ CREATE TABLE EF_client(
 
 CREATE TABLE EF_depot(
    id_depot INT AUTO_INCREMENT,
-   montant DECIMAL(15,2)  NOT NULL,
+   montant DECIMAL(15,2)   NOT NULL,
+   date_depot DATETIME NOT NULL,
    id_utilisateur INT NOT NULL,
    PRIMARY KEY(id_depot),
    FOREIGN KEY(id_utilisateur) REFERENCES EF_utilisateur(id_utilisateur)
@@ -50,6 +51,8 @@ CREATE TABLE EF_admin(
 CREATE TABLE EF_pret(
    id_pret INT AUTO_INCREMENT,
    montant DECIMAL(15,2)   NOT NULL,
+   date_pret DATETIME NOT NULL,
+   date_retour DATETIME NOT NULL,
    id_client INT NOT NULL,
    id_type_pret INT NOT NULL,
    PRIMARY KEY(id_pret),
