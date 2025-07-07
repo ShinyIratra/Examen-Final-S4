@@ -14,11 +14,20 @@ Etape 2 :
         ✔ (Page admin) Admin mampiditra vola anatiny ilay établissement financer @done(25-07-07 16:28)
     - Création type de prêt avec différent taux :
         ✔ (Page admin) misy CRUD ana Pret disponible de afaka mifidy taux @done(25-07-07 13:53)
-        ☐ Argent final à payer avec le prix
+        ✔ Argent final à payer avec le prix @done(25-07-07 21:47)
     - Gestion de prêt pour les clients
-        ☐ (Page Clients) Pouvoir faire des prêts
+        ✔ (Page Clients) Pouvoir faire des prêts @done(25-07-07 21:47)
 
 Etape 3 :
      ✔ Refonte complète structure @started(25-07-07 14:37) @done(25-07-07 15:21) @lasted(44m14s)
     - ☐ Tableau pour afficher les interets gagnés par mois pour l'EF(avec filtre mois et année debut et fin)
         ☐ creation de graphique à partir du tableau
+
+Etape 4 : 
+        ☐ Soigner le design du site (vous pouvez utiliser php et les includes pour gérer les templates)
+        ☐ Le système de remboursement utilisé est basé sur l'annuité constante.
+        ☐ Un pret peut contenir une assurance en % .
+        ☐ Un système de simulation de prêt sera mis en place. Un prêt doit être validé pour être pris en compte
+        ☐ On peut générer un PDF à donner au client pour un prêt
+        ☐ Un client peut avoir plusieurs prêts dans l'EF
+        ☐ (S4 INFO uniquement) - On peut avoir un délai (en mois)  pour le 1er remboursement
