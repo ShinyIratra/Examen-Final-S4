@@ -43,9 +43,9 @@
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="../admin/list_pret_non_valide.php">
                             <i class='bx bx-heart icon' ></i>
-                            <span class="text nav-text">Likes</span>
+                            <span class="text nav-text">Pret Non Valide</span>
                         </a>
                     </li>
                     <li class="nav-link">
