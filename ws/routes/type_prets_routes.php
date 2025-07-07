@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../controllers/ObjetController.php';
 
-$TypePretsController = new ObjetController('type_pret', 'id_type_pret', [
+$TypePretsController = new ObjetController('ef_type_pret', 'id_type_pret', [
     'nom' => '',
     'taux' => 0.0
 ]);
