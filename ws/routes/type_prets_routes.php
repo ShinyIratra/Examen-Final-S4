@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../controllers/ObjetController.php';
 
 $TypePretsController = new ObjetController('EF_type_pret', 'id_type_pret', [
+
     'nom' => '',
     'taux' => 0.0,
     'duree_mois' => 0,
