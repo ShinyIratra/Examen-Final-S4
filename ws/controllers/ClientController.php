@@ -10,4 +10,9 @@ class ClientController extends ObjetController {
         $result = Client::getClientsWithUser();
         Flight::json($result);
     }
+
+    public function getRemboursementsByPret($id_pret) {
+        $result = Client::getRemboursementsByPret($id_pret);
+        Flight::json($result);
+    }
 }

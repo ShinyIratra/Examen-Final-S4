@@ -16,6 +16,8 @@ INSERT INTO EF_client (id_utilisateur) VALUES
 INSERT INTO EF_admin (id_utilisateur) VALUES
 (1);
 
+INSERT INTO EF_remboursement (montant, date_remboursement, interet, capital, isPaid, date_payement, id_pret) 
+                VALUES (10000, '2024-01-15', 0, 10000, false, NULL, 1);
 ----------------------------
 -- DONNEE LIE TRANSACTION --
 ----------------------------

@@ -12,8 +12,9 @@ $EFInteretsController = new InteretController('EF_remboursement', 'id_remboursem
 ]);
 
 Flight::route('GET /interets', [$EFInteretsController, 'getInterets']);
-Flight::route('GET /interets/date', [$EFInteretsController, 'getInteretsByDate']);
+// Flight::route('GET /interets/date', [$EFInteretsController, 'getInteretsByDate']);
 Flight::route('GET /interets/@date_debut/@date_fin', [$EFInteretsController, 'getInteretsByDate']);
+Flight::route('POST /interets/calculer-remboursement/@id_pret', [$EFInteretsController, 'calculerRemboursement']);
 Flight::route('GET /interets/@id', [$EFInteretsController, 'getById']);
 Flight::route('POST /interets', [$EFInteretsController, 'create']);
 Flight::route('PUT /interets/@id', [$EFInteretsController, 'update']);

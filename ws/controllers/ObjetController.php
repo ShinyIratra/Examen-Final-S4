@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/Objet.php';
 require_once __DIR__ . '/../helpers/Utils.php';
+require_once __DIR__ . '/../models/Interet.php';
 
 class ObjetController {
     private $nom_table = '';
@@ -31,6 +32,11 @@ class ObjetController {
     public function create() {
         $data = Flight::request()->data;
         $id = Objet::insert($data, $this->nom_table, $this->champs);
+
+        if ($this->nom_table == 'ef_pret') {
+            $data_array = (array) $data; // Convertir en array pour la méthode
+            Interet::calculerRemboursement($id, $data_array);
+        }
         Flight::json(['message' => 'Ajouté', 'id' => $id]);
     }
 
