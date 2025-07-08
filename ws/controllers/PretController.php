@@ -9,6 +9,11 @@ class PretController extends ObjetController {
 
     public function validePret($id) {
         $result = PretValide::insertPret($id);
+
+        $pret = Pret::getPretById($id);
+        if ($pret) {
+            Interet::calculerRemboursement($id, $pret);
+        }
         Flight::json(['success' => true, 'id' => $result]);
     }
 

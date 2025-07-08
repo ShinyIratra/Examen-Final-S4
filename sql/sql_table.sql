@@ -85,3 +85,14 @@ CREATE TABLE EF_pret_valide(
    PRIMARY KEY(id_pret_valide),
    FOREIGN KEY(id_pret) REFERENCES EF_pret(id_pret)
 );
+
+CREATE TABLE EF_simulation(
+   id_simulation INT AUTO_INCREMENT,
+   montant DECIMAL(15,2)   NOT NULL,
+   date_remboursement DATE NOT NULL,
+   interet DECIMAL(15,2)   NOT NULL,
+   capital DECIMAL(15,2)   NOT NULL,
+   id_pret INT NOT NULL,
+   PRIMARY KEY(id_simulation),
+   FOREIGN KEY(id_pret) REFERENCES EF_pret(id_pret)
+);
