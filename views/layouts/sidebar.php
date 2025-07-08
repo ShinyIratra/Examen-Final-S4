@@ -22,37 +22,37 @@
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="../admin/">
-                            <i class='bx bx-home-alt icon' ></i>
+                            <i class='bx bx-grid-alt icon'></i>
                             <span class="text nav-text">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="../admin/ajout_fond.php">
-                            <i class='bx bx-money icon' ></i>
+                            <i class='bx bx-money-withdraw icon'></i>
                             <span class="text nav-text">Ajout Fond</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="../admin/pret.php">
-                            <i class='bx bx-dollar-circle icon'></i>
+                            <i class='bx bx-credit-card-front icon'></i>
                             <span class="text nav-text">Ajouter Pret</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="../admin/type_pret.php">
-                            <i class='bx bx-category icon' ></i>
+                            <i class='bx bx-list-ul icon'></i>
                             <span class="text nav-text">Type Pret</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="../admin/list_pret_non_valide.php">
-                            <i class='bx bx-x-circle icon' ></i>
+                            <i class='bx bx-time-five icon'></i>
                             <span class="text nav-text">Pret Non Valide</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="../admin/pdf_client.php">
-                            <i class='bx bx-wallet icon' ></i>
+                            <i class='bx bxs-download icon'></i>
                             <span class="text nav-text">PDF Pret</span>
                         </a>
                     </li>
@@ -61,7 +61,7 @@
             <div class="bottom-content">
                 <li class="">
                     <a href="#">
-                        <i class='bx bx-log-out icon' ></i>
+                        <i class='bx bx-log-out icon'></i>
                         <span class="text nav-text">Logout</span>
                     </a>
                 </li>
