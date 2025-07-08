@@ -20,12 +20,12 @@ Etape 2 :
 
 Etape 3 :
      ✔ Refonte complète structure @started(25-07-07 14:37) @done(25-07-07 15:21) @lasted(44m14s)
-    - ☐ Tableau pour afficher les interets gagnés par mois pour l'EF(avec filtre mois et année debut et fin)
-        ☐ creation de graphique à partir du tableau
+    ✔ ☐ Tableau pour afficher les interets gagnés par mois pour l'EF(avec filtre mois et année debut et fin) @done(25-07-08 08:08)
+        ✔ creation de graphique à partir du tableau @done(25-07-08 08:08)
 
 Etape 4 : 
         ☐ Soigner le design du site (vous pouvez utiliser php et les includes pour gérer les templates)
-        ☐ Le système de remboursement utilisé est basé sur l'annuité constante.
+        ✔ Le système de remboursement utilisé est basé sur l'annuité constante. @done(25-07-08 09:01)
         ✔ Un pret peut contenir une assurance en % . @done(25-07-07 21:59)
         ✔ Un système de simulation de prêt sera mis en place. Un prêt doit être validé pour être pris en compte @done(25-07-07 22:35)
         ✔ On peut générer un PDF à donner au client pour un prêt @done(25-07-08 07:53)

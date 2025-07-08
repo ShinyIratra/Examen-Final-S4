@@ -12,4 +12,15 @@ class Client extends Objet {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function getRemboursementsByPret($id_pret) {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT r.*, p.montant as pret_montant 
+            FROM EF_remboursement r
+            JOIN EF_pret p ON r.id_pret = p.id_pret
+            WHERE r.id_pret = ?
+            ORDER BY r.date_remboursement");
+        $stmt->execute([$id_pret]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
