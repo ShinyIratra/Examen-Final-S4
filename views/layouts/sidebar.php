@@ -56,6 +56,12 @@
                             <span class="text nav-text">PDF Pret</span>
                         </a>
                     </li>
+                    <li class="nav-link">
+                        <a href="../admin/simulation.php">
+                            <i class='bx bx-chart'></i>
+                            <span class="text nav-text">Simulations</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="bottom-content">
