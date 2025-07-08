@@ -9,6 +9,11 @@ class PretController extends ObjetController {
 
     public function validePret($id) {
         $result = PretValide::insertPret($id);
+
+        $pret = Pret::getPretById($id);
+        if ($pret) {
+            Interet::calculerRemboursement($id, $pret);
+        }
         Flight::json(['success' => true, 'id' => $result]);
     }
 
@@ -33,5 +38,11 @@ class PretController extends ObjetController {
         } else {
             Flight::json(['success' => false, 'message' => 'Pret not found']);
         }
+    }
+
+    public function getAllPretsValides()
+    {
+        $result = PretValide::getAllPretsValides();
+        Flight::json($result);
     }
 }

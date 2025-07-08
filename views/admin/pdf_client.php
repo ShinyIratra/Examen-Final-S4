@@ -3,17 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <title>PDF Prêt Client</title>
-  <style>
-    .container { margin: 20px; }
-    .form-group { margin: 15px 0; }
-    input, button, select { margin: 5px; padding: 8px; }
-    button { cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 4px; }
-    button:hover { background-color: #45a049; }
-  </style>
   <!----======== CSS ======== -->
   <link rel="stylesheet" href="../layouts/style.css">
   <!----===== Boxicons CSS ===== -->
   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  
+  <style>
+    /* Styles pour la page PDF Client */
+    .main-content {
+      padding: 25px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .main-content h1 {
+      color: var(--primary-color);
+      font-size: 28px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--primary-color-light);
+    }
+    
+    /* Container */
+    .container {
+      background-color: var(--sidebar-color);
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Groupes de formulaire */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+    
+    /* Inputs et select */
+    input, select, datalist {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 6px;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      transition: all 0.3s ease;
+    }
+    
+    input:focus, select:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(105, 92, 254, 0.2);
+    }
+    
+    /* Bouton de téléchargement */
+    #download-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    #download-btn:before {
+      content: '📄';
+    }
+    
+    #download-btn:hover {
+      background-color: #5a4fe6;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    #download-btn:disabled {
+      background-color: #9e9e9e;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
   <?php

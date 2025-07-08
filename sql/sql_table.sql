@@ -52,6 +52,31 @@ CREATE TABLE EF_admin(
    FOREIGN KEY(id_utilisateur) REFERENCES EF_utilisateur(id_utilisateur)
 );
 
+CREATE TABLE EF_simulation(
+   id_simulation INT AUTO_INCREMENT,
+   montant DECIMAL(15,2)   NOT NULL,
+   date_pret DATETIME NOT NULL,
+   date_retour DATETIME NOT NULL,
+   assurance DECIMAL(15,2)   DEFAULT 0,
+   delai INT DEFAULT 0,
+   id_type_pret INT NOT NULL,
+   id_client INT NOT NULL,
+   PRIMARY KEY(id_simulation),
+   FOREIGN KEY(id_type_pret) REFERENCES EF_type_pret(id_type_pret),
+   FOREIGN KEY(id_client) REFERENCES EF_client(id_client)
+);
+
+CREATE TABLE EF_simulation_remboursement(
+   id_simulation_remboursement INT AUTO_INCREMENT,
+   montant DECIMAL(15,2)   NOT NULL,
+   date_remboursement DATE NOT NULL,
+   interet DECIMAL(15,2)   NOT NULL,
+   capital DECIMAL(15,2)   NOT NULL,
+   id_simulation INT NOT NULL,
+   PRIMARY KEY(id_simulation_remboursement),
+   FOREIGN KEY(id_simulation) REFERENCES EF_simulation(id_simulation)
+);
+
 CREATE TABLE EF_pret(
    id_pret INT AUTO_INCREMENT,
    montant DECIMAL(15,2)   NOT NULL,
@@ -72,7 +97,7 @@ CREATE TABLE EF_remboursement(
    date_remboursement DATE NOT NULL,
    interet DECIMAL(15,2)   NOT NULL,
    capital DECIMAL(15,2)   NOT NULL,
-   isPaid BOOLEAN NOT NULL DEFAULT FASLE,
+   isPaid BOOLEAN NOT NULL DEFAULT 0,
    date_payement DATE,
    id_pret INT NOT NULL,
    PRIMARY KEY(id_remboursement),
@@ -85,3 +110,4 @@ CREATE TABLE EF_pret_valide(
    PRIMARY KEY(id_pret_valide),
    FOREIGN KEY(id_pret) REFERENCES EF_pret(id_pret)
 );
+

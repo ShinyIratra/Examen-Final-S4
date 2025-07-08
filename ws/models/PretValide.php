@@ -25,4 +25,11 @@ class PretValide extends Objet {
         $stmt->execute([$id_user]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function getAllPretsValides() {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT * FROM ef_pret WHERE id_pret IN (SELECT id_pret FROM ef_pret_valide) ORDER BY date_pret DESC");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
