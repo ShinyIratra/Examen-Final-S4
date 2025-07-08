@@ -18,6 +18,11 @@ class ObjetController {
         Flight::json($result);
     }
 
+    public function getAllDescByColonne($colonne, $croissant = true) {
+        $result = Objet::getAllDescBy($this->nom_table, $colonne, $croissant);
+        Flight::json($result);
+    }
+
     public function getById($id) {
         $result = Objet::getById($id, $this->nom_table, $this->nom_id);
         Flight::json($result);

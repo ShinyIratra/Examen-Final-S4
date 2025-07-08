@@ -8,6 +8,12 @@ class Objet {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function getAllDescBy($nom_table, $nom_colonne, $croissant = true) {
+        $db = getDB();
+        $stmt = $db->query("SELECT * FROM " . $nom_table . " ORDER BY " . $nom_colonne . ($croissant ? " ASC" : " DESC"));
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public static function getById($id, $nom_table, $nom_id) {
         $db = getDB();
         $stmt = $db->prepare("SELECT * FROM " . $nom_table . " WHERE " . $nom_id . " = ?");
