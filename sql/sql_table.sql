@@ -111,3 +111,17 @@ CREATE TABLE EF_pret_valide(
    FOREIGN KEY(id_pret) REFERENCES EF_pret(id_pret)
 );
 
+CREATE VIEW v_utilisateurs_with_roles AS
+SELECT 
+    u.id_utilisateur,
+    u.nom,
+    u.mdp,
+    u.identifiant,
+    CASE 
+        WHEN a.id_admin IS NOT NULL THEN 'admin'
+        WHEN c.id_client IS NOT NULL THEN 'client'
+        ELSE 'aucun'
+    END AS role
+FROM EF_utilisateur u
+LEFT JOIN EF_admin a ON u.id_utilisateur = a.id_utilisateur
+LEFT JOIN EF_client c ON u.id_utilisateur = c.id_utilisateur;

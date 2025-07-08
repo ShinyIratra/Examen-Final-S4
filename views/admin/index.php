@@ -2,14 +2,14 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Gestion des étudiants</title>
+  <title>Gestion des Utilisateurs</title>
   <!----======== CSS ======== -->
   <link rel="stylesheet" href="../layouts/style.css">
   <!----===== Boxicons CSS ===== -->
   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
   
   <style>
-    /* Styles pour la page Dashboard */
+    /* Styles pour la page Gestion des Utilisateurs */
     .main-content {
       padding: 25px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
@@ -23,7 +23,7 @@
       border-bottom: 2px solid var(--primary-color-light);
     }
     
-    /* Formulaire */
+    /* Formulaire d'utilisateur */
     .main-content > div:first-of-type {
       background-color: var(--sidebar-color);
       border-radius: 8px;
@@ -37,14 +37,15 @@
     }
     
     /* Inputs et boutons */
-    input, button {
+    input, select, button {
       border-radius: 6px;
       padding: 10px 15px;
       border: 1px solid #ddd;
       transition: all 0.3s ease;
+      min-width: 150px;
     }
     
-    input:focus {
+    input:focus, select:focus {
       border-color: var(--primary-color);
       outline: none;
       box-shadow: 0 0 0 3px rgba(105, 92, 254, 0.2);
@@ -94,6 +95,30 @@
       background-color: rgba(105, 92, 254, 0.05);
     }
     
+    /* Badge de rôle */
+    .role-badge {
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    
+    .role-client {
+      background-color: #e3f2fd;
+      color: #1976d2;
+    }
+    
+    .role-admin {
+      background-color: #fff3e0;
+      color: #f57c00;
+    }
+    
+    .role-aucun {
+      background-color: #f5f5f5;
+      color: #757575;
+    }
+    
     /* Boutons d'action */
     td button {
       width: 32px;
@@ -105,130 +130,200 @@
       justify-content: center;
       font-size: 16px;
     }
+    
+    .password-field {
+      position: relative;
+    }
+    
+    .password-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      width: auto;
+      height: auto;
+      min-width: auto;
+    }
   </style>
 </head>
 <body>
   <?php
     require '../layouts/sidebar.php';
   ?>
-  
+
   <div class="main-content">
-    <h1>Gestion des étudiants</h1>
+    <h1>Gestion des Utilisateurs</h1>
 
     <div>
-      <input type="hidden" id="id">
-      <input type="text" id="nom" placeholder="Nom">
-      <input type="text" id="prenom" placeholder="Prénom">
-      <input type="email" id="email" placeholder="Email">
-      <input type="number" id="age" placeholder="Âge">
+      <input type="hidden" id="id_utilisateur">
+      <input type="text" id="nom" placeholder="Nom complet" required>
+      <input type="text" id="identifiant" placeholder="Identifiant" required>
+      <div class="password-field">
+        <input type="password" id="mdp" placeholder="Mot de passe" required>
+        <button type="button" class="password-toggle" onclick="togglePassword()">
+          <i class='bx bx-hide' id="password-icon"></i>
+        </button>
+      </div>
+      
+      <select id="role" required>
+        <option value="">Choisir un rôle</option>
+        <option value="client">Client</option>
+        <option value="admin">Administrateur</option>
+      </select>
+      
       <button onclick="ajouterOuModifier()">Ajouter / Modifier</button>
+      <button onclick="resetForm()">Réinitialiser</button>
     </div>
 
-    <table id="table-etudiants">
+    <table id="table-utilisateurs">
       <thead>
         <tr>
-          <th>ID</th><th>Nom</th><th>Prénom</th><th>Email</th><th>Âge</th><th>Actions</th>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Identifiant</th>
+          <th>Rôle</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
 
-    <a href="test.html"> Test </a>
-  </div>
-  
-  <script src="../env.js"></script>
-  <script>
-    function ajax(method, url, data, callback) {
-      const xhr = new XMLHttpRequest();
-      xhr.open(method, apiBase + url, true);
-      if (method === "PUT" || method === "POST") {
-        xhr.setRequestHeader("Content-Type", "application/json");
-      } else {
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      }
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          callback(JSON.parse(xhr.responseText));
+    <script src="../env.js"></script>
+    <script>
+      function ajax(method, url, data, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, apiBase + url, true);
+        if (method === "PUT" || method === "POST") {
+          xhr.setRequestHeader("Content-Type", "application/json");
         }
-      };
-      xhr.send(data);
-    }
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            callback(JSON.parse(xhr.responseText));
+          } else if (xhr.readyState === 4 && xhr.status !== 200) {
+            console.error("Error in API call:", xhr.status, xhr.statusText);
+            try {
+              const errorResponse = JSON.parse(xhr.responseText);
+              alert("Erreur: " + (errorResponse.error || "Erreur inconnue"));
+            } catch (e) {
+              alert("Erreur de communication avec le serveur");
+            }
+          }
+        };
+        xhr.send(data);
+      }
 
-    function chargerEtudiants() {
-      ajax("GET", "/etudiants", null, (data) => {
-        const tbody = document.querySelector("#table-etudiants tbody");
-        tbody.innerHTML = "";
-        data.forEach(e => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${e.id}</td>
-            <td>${e.nom}</td>
-            <td>${e.prenom}</td>
-            <td>${e.email}</td>
-            <td>${e.age}</td>
-            <td>
-              <button onclick='remplirFormulaire(${JSON.stringify(e)})'>✏️</button>
-              <button onclick='supprimerEtudiant(${e.id})'>🗑️</button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-      });
-    }
-
-    function ajouterOuModifier() {
-      const id = document.getElementById("id").value;
-      const nom = document.getElementById("nom").value;
-      const prenom = document.getElementById("prenom").value;
-      const email = document.getElementById("email").value;
-      const age = document.getElementById("age").value;
-
-      const dataObj = {
-        nom,
-        prenom,
-        email,
-        age
-      };
-
-      if (id) {
-        ajax("PUT", `/etudiants/${id}`, JSON.stringify(dataObj), () => {
-          resetForm();
-          chargerEtudiants();
-        });
-      } else {
-        ajax("POST", "/etudiants", JSON.stringify(dataObj), () => {
-          resetForm();
-          chargerEtudiants();
+      function chargerUtilisateurs() {
+        ajax("GET", "/utilisateurs", null, (data) => {
+          const tbody = document.querySelector("#table-utilisateurs tbody");
+          tbody.innerHTML = "";
+          data.forEach(e => {
+            const roleBadgeClass = `role-${e.role}`;
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${e.id_utilisateur}</td>
+              <td>${e.nom}</td>
+              <td>${e.identifiant}</td>
+              <td><span class="role-badge ${roleBadgeClass}">${e.role}</span></td>
+              <td>
+                <button onclick='remplirFormulaire(${JSON.stringify(e)})' title="Modifier">✏️</button>
+                <button onclick='supprimerUtilisateur(${e.id_utilisateur})' title="Supprimer">🗑️</button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
         });
       }
-    }
 
-    function remplirFormulaire(e) {
-      document.getElementById("id").value = e.id;
-      document.getElementById("nom").value = e.nom;
-      document.getElementById("prenom").value = e.prenom;
-      document.getElementById("email").value = e.email;
-      document.getElementById("age").value = e.age;
-    }
+      function ajouterOuModifier() {
+        const id = document.getElementById("id_utilisateur").value;
+        const nom = document.getElementById("nom").value;
+        const identifiant = document.getElementById("identifiant").value;
+        const mdp = document.getElementById("mdp").value;
+        const role = document.getElementById("role").value;
 
-    function supprimerEtudiant(id) {
-      if (confirm("Supprimer cet étudiant ?")) {
-        ajax("DELETE", `/etudiants/${id}`, null, () => {
-          chargerEtudiants();
-        });
+        if (!nom || !identifiant || !role) {
+          alert("Veuillez remplir tous les champs obligatoires.");
+          return;
+        }
+
+        if (!id && !mdp) {
+          alert("Le mot de passe est requis pour un nouvel utilisateur.");
+          return;
+        }
+
+        const dataObj = {
+          nom,
+          identifiant,
+          role
+        };
+
+        // Ajouter le mot de passe seulement s'il est fourni
+        if (mdp) {
+          dataObj.mdp = mdp;
+        }
+
+        if (id) {
+          ajax("PUT", `/utilisateurs/${id}`, JSON.stringify(dataObj), () => {
+            resetForm();
+            chargerUtilisateurs();
+            alert("Utilisateur modifié avec succès !");
+          });
+        } else {
+          ajax("POST", "/utilisateurs", JSON.stringify(dataObj), () => {
+            resetForm();
+            chargerUtilisateurs();
+            alert("Utilisateur créé avec succès !");
+          });
+        }
       }
-    }
 
-    function resetForm() {
-      document.getElementById("id").value = "";
-      document.getElementById("nom").value = "";
-      document.getElementById("prenom").value = "";
-      document.getElementById("email").value = "";
-      document.getElementById("age").value = "";
-    }
+      function remplirFormulaire(e) {
+        document.getElementById("id_utilisateur").value = e.id_utilisateur;
+        document.getElementById("nom").value = e.nom;
+        document.getElementById("identifiant").value = e.identifiant;
+        document.getElementById("role").value = e.role;
+        document.getElementById("mdp").value = ""; // Ne pas pré-remplir le mot de passe
+        document.getElementById("mdp").placeholder = "Laisser vide pour ne pas changer";
+      }
 
-    chargerEtudiants();
-  </script>
+      function supprimerUtilisateur(id) {
+        if (confirm("Supprimer cet utilisateur ? Cette action est irréversible.")) {
+          ajax("DELETE", `/utilisateurs/${id}`, null, () => {
+            chargerUtilisateurs();
+            alert("Utilisateur supprimé avec succès !");
+          });
+        }
+      }
 
+      function resetForm() {
+        document.getElementById("id_utilisateur").value = "";
+        document.getElementById("nom").value = "";
+        document.getElementById("identifiant").value = "";
+        document.getElementById("mdp").value = "";
+        document.getElementById("role").value = "";
+        document.getElementById("mdp").placeholder = "Mot de passe";
+      }
+
+      function togglePassword() {
+        const passwordInput = document.getElementById("mdp");
+        const passwordIcon = document.getElementById("password-icon");
+        
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          passwordIcon.className = "bx bx-show";
+        } else {
+          passwordInput.type = "password";
+          passwordIcon.className = "bx bx-hide";
+        }
+      }
+
+      // Initialisation
+      chargerUtilisateurs();
+    </script>
+  </div>
 </body>
 </html>
