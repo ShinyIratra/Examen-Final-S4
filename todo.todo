@@ -28,6 +28,6 @@ Etape 4 :
         ☐ Le système de remboursement utilisé est basé sur l'annuité constante.
         ✔ Un pret peut contenir une assurance en % . @done(25-07-07 21:59)
         ✔ Un système de simulation de prêt sera mis en place. Un prêt doit être validé pour être pris en compte @done(25-07-07 22:35)
-        ☐ On peut générer un PDF à donner au client pour un prêt
+        ✔ On peut générer un PDF à donner au client pour un prêt @done(25-07-08 07:53)
         ✔ Un client peut avoir plusieurs prêts dans l'EF @done(25-07-07 22:00)
         ☐ (S4 INFO uniquement) - On peut avoir un délai (en mois)  pour le 1er remboursement
