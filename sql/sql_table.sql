@@ -97,7 +97,7 @@ CREATE TABLE EF_remboursement(
    date_remboursement DATE NOT NULL,
    interet DECIMAL(15,2)   NOT NULL,
    capital DECIMAL(15,2)   NOT NULL,
-   isPaid BOOLEAN NOT NULL DEFAULT FASLE,
+   isPaid BOOLEAN NOT NULL DEFAULT 0,
    date_payement DATE,
    id_pret INT NOT NULL,
    PRIMARY KEY(id_remboursement),
@@ -110,3 +110,4 @@ CREATE TABLE EF_pret_valide(
    PRIMARY KEY(id_pret_valide),
    FOREIGN KEY(id_pret) REFERENCES EF_pret(id_pret)
 );
+

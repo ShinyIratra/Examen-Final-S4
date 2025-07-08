@@ -74,40 +74,88 @@ class Simulation extends Objet {
         $cleanStmt->execute([$simulationId]);
         
         // Get loan type details
-        $typePretStmt = $db->prepare("SELECT taux, duree_mois FROM ef_type_pret WHERE id_type_pret = ?");
-        $typePretStmt->execute([$simulationData['id_type_pret']]);
-        $typePret = $typePretStmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $db->prepare("SELECT taux, duree_mois FROM EF_type_pret WHERE id_type_pret = ?");
+        $stmt->execute([$simulationData['id_type_pret']]);
+        $tp = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$tp) {
+            error_log("ERREUR: Type de prêt non trouvé (id_type_pret={$simulationData['id_type_pret']})");
+            return false;
+        }
         
-        $montantTotal = $simulationData['montant'];
-        $taux = $typePret['taux'] / 100; // Convert percentage to decimal
-        $duree = $typePret['duree_mois'];
+        // Paramètres de calcul
+        $capital = (float)$simulationData['montant'];
+        $taux_mensuel = ((float)$tp['taux'] / 100) / 12;  // ex. 10%/12 = 0,00833333
+        $assurance_taux = ((float)$simulationData['assurance'] / 100) / 12; // taux mensuel d'assurance
+        $assurance_mensuelle = $assurance_taux * $capital; // montant mensuel d'assurance
+        $grace_period = isset($simulationData['delai']) ? (int)$simulationData['delai'] : 0;
         
-        // Calculate monthly payment amount (PMT formula)
-        $tauxMensuel = $taux / 12;
-        $paiementMensuel = $montantTotal * $tauxMensuel * pow(1 + $tauxMensuel, $duree) / (pow(1 + $tauxMensuel, $duree) - 1);
+        // Calculer la durée en mois à partir des dates
+        $date_retour = new DateTime($simulationData['date_retour']);
+        $date_pret = new DateTime($simulationData['date_pret']);
+        $interval = $date_pret->diff($date_retour);
+        $duree_mois = ($interval->y * 12) + $interval->m;
+        if ($interval->d > 0 || $date_pret->format('d') == $date_retour->format('d')) {
+            $duree_mois++;
+        }
         
-        $dateDebut = new DateTime($simulationData['date_pret']);
-        $solde = $montantTotal;
+        // Calcul de l'annuité constante (après période de grâce)
+        if ($taux_mensuel > 0) {
+            $annuite = $capital * $taux_mensuel * pow(1 + $taux_mensuel, $duree_mois - $grace_period) / 
+                     (pow(1 + $taux_mensuel, $duree_mois - $grace_period) - 1);
+        } else {
+            // Pour les prêts à taux zéro
+            $annuite = $capital / ($duree_mois - $grace_period);
+        }
         
-        $insertStmt = $db->prepare("
-            INSERT INTO ef_simulation_remboursement 
-            (montant, date_remboursement, interet, capital, id_simulation)
+        // Calcul du paiement pendant la période de grâce (intérêts + assurance seulement)
+        $mensualite_grace = $capital * $taux_mensuel + $assurance_mensuelle;
+        
+        // Préparation de la boucle d'insertion
+        $date_pret_obj = new DateTime($simulationData['date_pret']);
+        $cap_restant = $capital;
+        $sql_insert = "
+            INSERT INTO ef_simulation_remboursement
+                (montant, date_remboursement, interet, capital, id_simulation)
             VALUES (?, ?, ?, ?, ?)
-        ");
+        ";
+        $stmt_insert = $db->prepare($sql_insert);
         
-        for ($i = 1; $i <= $duree; $i++) {
-            $dateDebut->add(new DateInterval('P1M'));
-            $interet = $solde * $tauxMensuel;
-            $capital = $paiementMensuel - $interet;
-            $solde -= $capital;
+        // Génération des lignes de tableau
+        for ($m = 1; $m <= $duree_mois; $m++) {
+            $interet = round($cap_restant * $taux_mensuel, 2);
             
-            $insertStmt->execute([
-                $paiementMensuel,
-                $dateDebut->format('Y-m-d'),
+            // Pendant la période de grâce, on ne rembourse que les intérêts
+            if ($m <= $grace_period) {
+                $capital_rembourse = 0;
+                $montant_total = round($interet + $assurance_mensuelle, 2);
+            } else {
+                $capital_rembourse = round($annuite - $interet, 2);
+                $montant_total = round($annuite + $assurance_mensuelle, 2);
+            }
+            
+            // date de paiement = date_pret + m mois
+            $date_rm = (clone $date_pret_obj)->add(new DateInterval("P{$m}M"));
+            
+            $ok = $stmt_insert->execute([
+                $montant_total,
+                $date_rm->format('Y-m-d'),
                 $interet,
-                $capital,
+                $capital_rembourse,
                 $simulationId
             ]);
+            
+            if (!$ok) {
+                error_log("ERREUR INSERTION: " . print_r($stmt_insert->errorInfo(), true));
+                return false;
+            }
+            
+            // mise à jour du capital restant
+            if ($m > $grace_period) {
+                $cap_restant = round($cap_restant - $capital_rembourse, 2);
+                if ($cap_restant <= 0) {
+                    break;
+                }
+            }
         }
         
         return true;
