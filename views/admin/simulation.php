@@ -110,39 +110,11 @@
       justify-content: center;
       font-size: 16px;
     }
-    
-    /* Modal pour les détails de remboursement */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-    
-    .modal-content {
-      background-color: var(--sidebar-color);
-      margin: 5% auto;
-      padding: 20px;
-      border-radius: 8px;
-      width: 80%;
-      max-width: 800px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-    
-    .close-modal {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    
-    .close-modal:hover {
-      color: var(--primary-color);
+
+    .actions-bar {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: flex-end;
     }
   </style>
 </head>
@@ -170,9 +142,16 @@
       <button onclick="resetForm()">Réinitialiser</button>
     </div>
 
+    <div class="actions-bar">
+      <button id="compareBtn" onclick="compareSelectedSimulations()" disabled>
+        <i class='bx bx-git-compare'></i> Comparer les simulations sélectionnées
+      </button>
+    </div>
+
     <table id="table-simulations">
       <thead>
         <tr>
+          <th><input type="checkbox" id="select-all" onchange="toggleAllCheckboxes(this.checked)"></th>
           <th>ID</th>
           <th>Montant</th>
           <th>Date Prêt</th>
@@ -187,29 +166,6 @@
       <tbody></tbody>
     </table>
     
-    <!-- Modal pour afficher les détails de remboursement -->
-    <div id="remboursementsModal" class="modal">
-      <div class="modal-content">
-        <span class="close-modal" onclick="fermerModal()">&times;</span>
-        <h2>Détails des remboursements</h2>
-        <table id="table-remboursements">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Montant</th>
-              <th>Capital</th>
-              <th>Intérêt</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-        <div style="margin-top: 20px; text-align: right;">
-          <button id="convertToPretBtn" onclick="convertToPret()">Convertir en prêt</button>
-          <button onclick="genererPDF()">Télécharger PDF</button>
-        </div>
-      </div>
-    </div>
-
     <script src="../env.js"></script>
     <script>
       function ajax(method, url, data, callback) {
@@ -263,6 +219,7 @@
           data.forEach(e => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
+              <td><input type="checkbox" class="sim-checkbox" data-id="${e.id_simulation}" onchange="updateCompareButton()"></td>
               <td>${e.id_simulation}</td>
               <td>${e.montant}</td>
               <td>${e.date_pret || ""}</td>
@@ -272,7 +229,7 @@
               <td>${e.id_client}</td>
               <td>${e.id_type_pret}</td>
               <td>
-                <button onclick='voirRemboursements(${e.id_simulation})'>👁️</button>
+                <button onclick='window.location.href="simulation_detail.php?id=${e.id_simulation}"'>👁️</button>
                 <button onclick='remplirFormulaire(${JSON.stringify(e)})'>✏️</button>
                 <button onclick='supprimerSimulation(${e.id_simulation})'>🗑️</button>
               </td>
@@ -428,6 +385,33 @@
         if (event.target === modal) {
           fermerModal();
         }
+      }
+
+      // Fonctions pour la comparaison de simulations
+      function updateCompareButton() {
+        const checkboxes = document.querySelectorAll('.sim-checkbox:checked');
+        const compareBtn = document.getElementById('compareBtn');
+        compareBtn.disabled = checkboxes.length !== 2;
+      }
+
+      function toggleAllCheckboxes(checked) {
+        const checkboxes = document.querySelectorAll('.sim-checkbox');
+        checkboxes.forEach(checkbox => {
+          checkbox.checked = checked;
+        });
+        updateCompareButton();
+      }
+
+      function compareSelectedSimulations() {
+        const selectedIds = Array.from(document.querySelectorAll('.sim-checkbox:checked')).map(cb => cb.dataset.id);
+        
+        if (selectedIds.length !== 2) {
+          alert('Veuillez sélectionner exactement 2 simulations à comparer.');
+          return;
+        }
+        
+        // Rediriger vers une page de comparaison avec les IDs sélectionnés
+        window.location.href = `simulation_compare.php?id1=${selectedIds[0]}&id2=${selectedIds[1]}`;
       }
 
       // Initialisation
