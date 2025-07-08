@@ -194,10 +194,10 @@
           const summary = document.getElementById("simulation-summary");
           
           summary.innerHTML = `
-            <p><strong>Montant:</strong> ${parseFloat(data.montant).toFixed(2)} €</p>
+            <p><strong>Montant:</strong> ${parseFloat(data.montant).toFixed(2)} Ar</p>
             <p><strong>Date de début:</strong> ${new Date(data.date_pret).toLocaleDateString()}</p>
             <p><strong>Date de fin:</strong> ${new Date(data.date_retour).toLocaleDateString()}</p>
-            <p><strong>Assurance:</strong> ${parseFloat(data.assurance).toFixed(2)} €</p>
+            <p><strong>Assurance:</strong> ${parseFloat(data.assurance).toFixed(2)} Ar</p>
             <p><strong>Délai:</strong> ${data.delai} mois</p>
             <p><strong>Client:</strong> ${data.nom_client || data.id_client}</p>
             <p><strong>Taux:</strong> ${parseFloat(data.taux).toFixed(2)}%</p>
@@ -218,9 +218,9 @@
             const tr = document.createElement("tr");
             tr.innerHTML = `
               <td>${new Date(e.date_remboursement).toLocaleDateString()}</td>
-              <td>${parseFloat(e.montant).toFixed(2)} €</td>
-              <td>${parseFloat(e.capital).toFixed(2)} €</td>
-              <td>${parseFloat(e.interet).toFixed(2)} €</td>
+              <td>${parseFloat(e.montant).toFixed(2)} Ar</td>
+              <td>${parseFloat(e.capital).toFixed(2)} Ar</td>
+              <td>${parseFloat(e.interet).toFixed(2)} Ar</td>
             `;
             tbody.appendChild(tr);
             
@@ -233,9 +233,9 @@
           trTotal.style.fontWeight = "bold";
           trTotal.innerHTML = `
             <td>TOTAL</td>
-            <td>${(totalCapital + totalInteret).toFixed(2)} €</td>
-            <td>${totalCapital.toFixed(2)} €</td>
-            <td>${totalInteret.toFixed(2)} €</td>
+            <td>${(totalCapital + totalInteret).toFixed(2)} Ar</td>
+            <td>${totalCapital.toFixed(2)} Ar</td>
+            <td>${totalInteret.toFixed(2)} Ar</td>
           `;
           tbody.appendChild(trTotal);
         });
