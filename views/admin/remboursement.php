@@ -20,7 +20,9 @@
 
     <div>
       <label for="filtre_id_pret">Filtrer par ID Prêt :</label>
-      <input type="number" id="filtre_id_pret" placeholder="ID Prêt">
+      <select id="filtre_id_pret">
+        <option value="">Tous les prêts validés</option>
+      </select>
       <button onclick="filtrerParPret()">Filtrer</button>
       <button onclick="chargerRemboursements()">Tous</button>
     </div>
@@ -36,7 +38,9 @@
         <option value="1">Payé</option>
       </select>
       <input type="date" id="date_payement" placeholder="Date paiement">
-      <input type="number" id="id_pret" placeholder="ID Prêt">
+      <select id="id_pret">
+        <option value="">Choisir un prêt validé</option>
+      </select>
       <button onclick="ajouterOuModifier()">Ajouter / Modifier</button>
       <button onclick="resetForm()">Réinitialiser</button>
     </div>
@@ -131,12 +135,7 @@
             chargerRemboursements();
           });
         } else {
-          // Si tu veux permettre l'ajout, ajoute ici un POST
-          // ajax("POST", "/remboursements", JSON.stringify(dataObj), () => {
-          //   resetForm();
-          //   chargerRemboursements();
-          // });
-          alert("Ajout non implémenté.");
+          alert("tsisy ajout eh.");
         }
       }
 
@@ -170,7 +169,32 @@
         document.getElementById("id_pret").value = "";
       }
 
+      // Charger uniquement les prêts validés
+      function chargerPretsValides() {
+        ajax("GET", "/prets/valides", null, (data) => {
+          const select = document.getElementById("id_pret");
+          select.innerHTML = '<option value="">Choisir un prêt validé</option>';
+          data.forEach(e => {
+            const option = document.createElement("option");
+            option.value = e.id_pret;
+            option.textContent = `Prêt #${e.id_pret} - ${e.montant}€ (Client: ${e.id_client})`;
+            select.appendChild(option);
+          });
+          
+          // Remplir aussi le filtre
+          const filterSelect = document.getElementById("filtre_id_pret");
+          filterSelect.innerHTML = '<option value="">Tous les prêts validés</option>';
+          data.forEach(e => {
+            const option = document.createElement("option");
+            option.value = e.id_pret;
+            option.textContent = `Prêt ${e.id_pret}`;
+            filterSelect.appendChild(option);
+          });
+        });
+      }
+
       // Chargement initial
+      chargerPretsValides();
       chargerRemboursements();
     </script>
   </div>

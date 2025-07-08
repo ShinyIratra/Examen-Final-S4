@@ -34,4 +34,10 @@ class PretController extends ObjetController {
             Flight::json(['success' => false, 'message' => 'Pret not found']);
         }
     }
+
+    public function getAllPretsValides()
+    {
+        $result = PretValide::getAllPretsValides();
+        Flight::json($result);
+    }
 }

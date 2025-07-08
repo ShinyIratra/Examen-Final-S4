@@ -12,6 +12,7 @@ class Interet  {
             JOIN EF_pret p ON r.id_pret = p.id_pret
             WHERE r.date_remboursement IS NOT NULL
             AND r.date_remboursement BETWEEN ? AND ?
+            AND r.id_pret IN (SELECT id_pret FROM ef_pret_valide)
             GROUP BY annee, mois
             ORDER BY annee, mois");
         $stmt->execute([$date_debut, $date_fin]);
@@ -27,6 +28,7 @@ class Interet  {
             FROM EF_remboursement r
             JOIN EF_pret p ON r.id_pret = p.id_pret
             WHERE r.date_remboursement IS NOT NULL
+            AND r.id_pret IN (SELECT id_pret FROM ef_pret_valide)
             GROUP BY annee, mois
             ORDER BY annee, mois");
         $stmt->execute();
@@ -43,6 +45,14 @@ class Interet  {
             return ["error" => "id_type_pret absent du body", "data_pret" => $data_pret];
         }
         $db = getDB();
+        
+        // NOUVELLE VÉRIFICATION : Le prêt doit être validé
+        $stmt = $db->prepare("SELECT 1 FROM ef_pret_valide WHERE id_pret = ?");
+        $stmt->execute([$id_pret]);
+        if (!$stmt->fetch()) {
+            error_log("ERREUR: Le prêt ID $id_pret n'est pas validé");
+            return ["error" => "Le prêt n'est pas validé", "id_pret" => $id_pret];
+        }
         
         // Debug: Afficher les données reçues
         error_log("=== DEBUT DEBUG REMBOURSEMENT ===");
@@ -68,7 +78,7 @@ class Interet  {
         $date_retour = new DateTime($data_pret['date_retour']);
         $interval = $date_pret->diff($date_retour);
         $duree_mois = ($interval->y * 12) + $interval->m;
-        if ($interval->d > 0) $duree_mois++; // arrondir au mois supérieur si jours restants
+        if ($interval->d > 0 ) $duree_mois++; // arrondir au mois supérieur si jours restants
 
         $assurance = ($data_pret['assurance'] / 100 / 12) * $capital;
 
@@ -99,7 +109,6 @@ class Interet  {
 
             error_log("Date remboursement: " . $date_remboursement->format('Y-m-d'));
 
-            // Insertion dans la table EF_remboursement
             $sql = "INSERT INTO EF_remboursement 
                 (montant, date_remboursement, interet, capital, isPaid, date_payement, id_pret) 
                 VALUES (?, ?, ?, ?, 0, NULL, ?)";
