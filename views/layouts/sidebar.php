@@ -52,20 +52,32 @@
                     </li>
                     <li class="nav-link">
                         <a href="../admin/pdf_client.php">
-                            <i class='bx bxs-download icon'></i>
+                            <i class='bx bxs-file-pdf icon'></i>
                             <span class="text nav-text">PDF Pret</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../admin/simulation.php">
-                            <i class='bx bx-chart'></i>
-                            <span class="text nav-text">Simulations</span>
+                        <a href="../admin/interets.php">
+                            <i class='bx bx-trending-up icon'></i>
+                            <span class="text nav-text">Interêts</span>
                         </a>
                     </li>
                     <li class="nav-link">
+                        <a href="../admin/simulation.php">
+                            <i class='bx bx-calculator icon'></i>
+                            <span class="text nav-text">Simulations</span>
+                        </a>
+                    </li>
+                  <li class="nav-link">
                         <a href="../admin/fond_disponible.php">
                             <i class='bx bx-chart'></i>
                             <span class="text nav-text">Fonds Disponibles</span>
+                         </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="../admin/simulation.php">
+                            <i class='bx bx-transfer-alt icon'></i>
+                            <span class="text nav-text">Remboursement</span>
                         </a>
                     </li>
                 </ul>

@@ -85,9 +85,7 @@ class Simulation extends Objet {
         // Paramètres de calcul
         $capital = (float)$simulationData['montant'];
         $taux_mensuel = ((float)$tp['taux'] / 100) / 12;  // ex. 10%/12 = 0,00833333
-        $assurance_taux = ((float)$simulationData['assurance'] / 100) / 12; // taux mensuel d'assurance
-        $assurance_mensuelle = $assurance_taux * $capital; // montant mensuel d'assurance
-        $grace_period = isset($simulationData['delai']) ? (int)$simulationData['delai'] : 0;
+        $assurance_mensuelle = ((float)$simulationData['assurance'] / 100) / 12 * $capital; // montant mensuel d'assurance
         
         // Calculer la durée en mois à partir des dates
         $date_retour = new DateTime($simulationData['date_retour']);
@@ -98,17 +96,15 @@ class Simulation extends Objet {
             $duree_mois++;
         }
         
-        // Calcul de l'annuité constante (après période de grâce)
-        if ($taux_mensuel > 0) {
-            $annuite = $capital * $taux_mensuel * pow(1 + $taux_mensuel, $duree_mois - $grace_period) / 
-                     (pow(1 + $taux_mensuel, $duree_mois - $grace_period) - 1);
-        } else {
-            // Pour les prêts à taux zéro
-            $annuite = $capital / ($duree_mois - $grace_period);
-        }
+        $delai = isset($simulationData['delai']) ? (int)$simulationData['delai'] : 0;
         
-        // Calcul du paiement pendant la période de grâce (intérêts + assurance seulement)
-        $mensualite_grace = $capital * $taux_mensuel + $assurance_mensuelle;
+        // Allonger la durée totale du prêt du délai
+        $duree_mois = $duree_mois + $delai;
+        
+        // Calcul de l'annuité constante (hors délai)
+        $nb_mois_remb = $duree_mois - $delai;
+        if ($nb_mois_remb <= 0) $nb_mois_remb = 1; // sécurité
+        $annuite = $capital*(($taux_mensuel)/(1-pow(1+$taux_mensuel,-$nb_mois_remb)));
         
         // Préparation de la boucle d'insertion
         $date_pret_obj = new DateTime($simulationData['date_pret']);
@@ -122,19 +118,19 @@ class Simulation extends Objet {
         
         // Génération des lignes de tableau
         for ($m = 1; $m <= $duree_mois; $m++) {
-            $interet = round($cap_restant * $taux_mensuel, 2);
+            $date_rm = (clone $date_pret_obj)->add(new DateInterval("P" . ($m-1) . "M"));
             
-            // Pendant la période de grâce, on ne rembourse que les intérêts
-            if ($m <= $grace_period) {
+            if ($m <= $delai) {
+                // Pendant le délai : on ne rembourse que l'intérêt
+                $interet = $cap_restant * $taux_mensuel;
                 $capital_rembourse = 0;
-                $montant_total = round($interet + $assurance_mensuelle, 2);
+                $montant_total = $interet + $assurance_mensuelle;
             } else {
-                $capital_rembourse = round($annuite - $interet, 2);
-                $montant_total = round($annuite + $assurance_mensuelle, 2);
+                // Après le délai : annuité classique
+                $interet = $cap_restant * $taux_mensuel;
+                $capital_rembourse = $annuite - $interet;
+                $montant_total = $annuite + $assurance_mensuelle;
             }
-            
-            // date de paiement = date_pret + m mois
-            $date_rm = (clone $date_pret_obj)->add(new DateInterval("P{$m}M"));
             
             $ok = $stmt_insert->execute([
                 $montant_total,
@@ -150,11 +146,9 @@ class Simulation extends Objet {
             }
             
             // mise à jour du capital restant
-            if ($m > $grace_period) {
-                $cap_restant = round($cap_restant - $capital_rembourse, 2);
-                if ($cap_restant <= 0) {
-                    break;
-                }
+            $cap_restant = round($cap_restant - $capital_rembourse, 8);
+            if ($cap_restant <= 0) {
+                break;
             }
         }
         
