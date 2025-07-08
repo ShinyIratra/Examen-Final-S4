@@ -48,8 +48,16 @@ class Interet  {
         }
     }
 
-    // 2. Récupération du taux et de la durée en mois
+    // Verification Valide
     $db   = getDB();
+    $stmt = $db->prepare("SELECT 1 FROM ef_pret_valide WHERE id_pret = ?");
+    $stmt->execute([$id_pret]);
+    if (!$stmt->fetch()) {
+        error_log("ERREUR: Le prêt ID $id_pret n'est pas validé");
+        return ["error" => "Le prêt n'est pas validé", "id_pret" => $id_pret];
+    }
+
+    // 2. Récupération du taux et de la durée en mois
     $stmt = $db->prepare("
         SELECT taux, duree_mois 
         FROM EF_type_pret 

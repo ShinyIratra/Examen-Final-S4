@@ -5,7 +5,7 @@ INSERT INTO EF_utilisateur (nom, mdp, identifiant) VALUES
 ('User2', '123', 'user2');
 
 -- Types de prêt
-INSERT INTO EF_type_pret (nom, taux, duree_mois) VALUES ('Etudiant', 6, 24 );
+INSERT INTO EF_type_pret (nom, taux, duree_mois) VALUES ('Etudiant', 10, 24 );
 
 -- Clients (liés aux utilisateurs)
 INSERT INTO EF_client (id_utilisateur) VALUES
