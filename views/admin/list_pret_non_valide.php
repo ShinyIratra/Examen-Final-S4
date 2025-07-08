@@ -3,16 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <title>Prêts Non Validés</title>
-  <style>
-    input, button, select { margin: 5px; padding: 5px; }
-    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    th { background-color: #f2f2f2; }
-  </style>
   <!----======== CSS ======== -->
   <link rel="stylesheet" href="../layouts/style.css">
   <!----===== Boxicons CSS ===== -->
   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  
+  <style>
+    /* Styles pour la page Prêts Non Validés */
+    .main-content {
+      padding: 25px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .main-content h1 {
+      color: var(--primary-color);
+      font-size: 28px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--primary-color-light);
+    }
+    
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      background-color: var(--sidebar-color);
+    }
+    
+    th {
+      background-color: var(--primary-color-light);
+      color: var(--text-color);
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 15px;
+    }
+    
+    td {
+      padding: 10px 15px;
+      border-bottom: 1px solid var(--primary-color-light);
+    }
+    
+    tr:last-child td {
+      border-bottom: none;
+    }
+    
+    tr {
+      background-color: rgba(255, 205, 210, 0.1);
+    }
+    
+    tr:hover {
+      background-color: rgba(255, 205, 210, 0.3);
+    }
+    
+    /* Montant en surbrillance */
+    td:nth-child(2) {
+      font-weight: 600;
+      color: #2e7d32;
+    }
+    
+    /* Bouton Valider */
+    td button {
+      background-color: #43a047;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 15px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    td button:hover {
+      background-color: #2e7d32;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+  </style>
 </head>
 <body>
   <?php
