@@ -125,7 +125,11 @@
       <input type="hidden" id="id_depot">
       <input type="number" id="montant" placeholder="Montant">
       <input type="date" id="date_depot" placeholder="Date">
-      <input type="number" id="id_utilisateur" placeholder="ID Utilisateur">
+      
+      <input type="text" id="id_utilisateur" list="utilisateurs-list" placeholder="Sélectionner un utilisateur">
+      <datalist id="utilisateurs-list">
+      </datalist>
+      
       <button onclick="ajouterOuModifier()">Ajouter / Modifier</button>
     </div>
 
@@ -218,6 +222,26 @@
         }
       }
 
+      function chargerUtilisateurs() {
+        ajax("GET", "/clients/details", null, (data) => {
+          const datalist = document.getElementById("utilisateurs-list");
+          datalist.innerHTML = "";
+          
+          const addedUsers = new Set();
+          
+          data.forEach(client => {
+            if (!addedUsers.has(client.id_utilisateur)) {
+              const option = document.createElement("option");
+              option.value = client.id_utilisateur;
+              option.text = `${client.id_utilisateur} - ${client.nom || ''} ${client.identifiant || ''}`;
+              datalist.appendChild(option);
+              
+              addedUsers.add(client.id_utilisateur);
+            }
+          });
+        });
+      }
+
       function resetForm() {
         document.getElementById("id_depot").value = "";
         document.getElementById("montant").value = "";
@@ -225,9 +249,11 @@
         document.getElementById("id_utilisateur").value = "";
       }
 
+      chargerUtilisateurs();
+
       chargerDepot();
+      chargerUtilisateurs();
     </script>
   </div>
 </body>
 </html>
-<?php /**PATH C:\laragon\www\projet\resources\views\ajoutFond.blade.php ENDPATH**/ ?>

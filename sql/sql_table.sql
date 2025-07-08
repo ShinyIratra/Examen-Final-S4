@@ -16,7 +16,7 @@ CREATE TABLE EF_utilisateur(
    id_utilisateur INT AUTO_INCREMENT,
    nom VARCHAR(255)  NOT NULL,
    mdp TEXT NOT NULL,
-   identifiant TEXT NOT NULL,
+   identifiant varchar(255) NOT NULL,
    PRIMARY KEY(id_utilisateur),
    UNIQUE(identifiant)
 );
