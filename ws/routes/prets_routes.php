@@ -12,6 +12,7 @@ $PretsController = new PretController('ef_pret', 'id_pret', [
 ]);
 
 Flight::route('GET /prets', [$PretsController, 'getAll']);
+Flight::route('GET /prets/valides', [$PretsController, 'getAllPretsValides']);
 Flight::route('GET /prets/tri/@ordre', function($ordre) use ($PretsController) {
     $croissant = $ordre === 'asc';
     $PretsController->getAllDescByColonne("date_pret", $croissant);

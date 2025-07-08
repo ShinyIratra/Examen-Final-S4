@@ -32,8 +32,12 @@ INSERT INTO EF_fond (id_depot) VALUES
 (1),
 (2);
 
+INSERT INTO EF_pret_valide (id_pret) VALUES
+(1);
 -- Prêts (liés aux clients et types de prêt)
 INSERT INTO EF_pret (montant, date_pret, date_retour, id_client, id_type_pret) VALUES
 (20000.00, '2024-01-10', '2026-01-10', 1, 1),
 (5000.00, '2024-02-15', '2025-02-15', 2, 2),
 (12000.00, '2024-03-20', '2028-03-20', 1, 3);
+
+SELECT YEAR(date_remboursement) AS annee, MONTH(date_remboursement) AS mois, SUM(interet) AS total_interets FROM EF_remboursement r JOIN EF_pret p ON r.id_pret = p.id_pret WHERE r.date_remboursement IS NOT NULL AND r.id_pret IN (SELECT id_pret FROM ef_pret_valide) GROUP BY annee, mois ORDER BY annee, mois
