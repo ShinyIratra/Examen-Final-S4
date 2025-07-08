@@ -12,3 +12,5 @@ Flight::route('GET /clients/@id', [$EFClientsController, 'getById']);
 Flight::route('POST /clients', [$EFClientsController, 'create']);
 Flight::route('PUT /clients/@id', [$EFClientsController, 'update']);
 Flight::route('DELETE /clients/@id', [$EFClientsController, 'delete']);
+
+Flight::route('GET /clients/remboursements/@id_pret', [$EFClientsController, 'getRemboursementsByPret']);

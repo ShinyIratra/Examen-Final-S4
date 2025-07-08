@@ -157,7 +157,7 @@
             chargerPrets();
           });
         } else {
-          ajax("POST", "/prets", JSON.stringify(dataObj), () => {
+          ajax("POST", "/prets", JSON.stringify(dataObj), (reponse) => {
             resetForm();
             chargerPrets();
           });
