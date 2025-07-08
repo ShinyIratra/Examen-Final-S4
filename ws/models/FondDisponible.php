@@ -3,9 +3,6 @@ require_once __DIR__ . '/../db.php';
 
 class FondDisponible {
     
-    /**
-     * Récupère le montant total des dépôts par mois
-     */
     public static function getDepotsByMois($annee = null, $mois = null) {
         $db = getDB();
         
@@ -32,9 +29,6 @@ class FondDisponible {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    /**
-     * Récupère le montant total des prêts accordés par mois
-     */
     public static function getPretsByMois($annee = null, $mois = null) {
         $db = getDB();
         
@@ -62,9 +56,6 @@ class FondDisponible {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    /**
-     * Récupère le montant total des remboursements par mois
-     */
     public static function getRemboursementsByMois($annee = null, $mois = null) {
         $db = getDB();
         
@@ -93,9 +84,6 @@ class FondDisponible {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    /**
-     * Calcule le montant total disponible par mois
-     */
     public static function getFondDisponibleByMois($annee = null, $mois = null) {
         $depots = self::getDepotsByMois($annee, $mois);
         $prets = self::getPretsByMois($annee, $mois);
@@ -174,9 +162,7 @@ class FondDisponible {
         return $result;
     }
     
-    /**
-     * Calcule le montant total disponible cumulé
-     */
+
     public static function getFondDisponibleCumule() {
         $fondsByMois = self::getFondDisponibleByMois();
         $montantCumule = 0;
