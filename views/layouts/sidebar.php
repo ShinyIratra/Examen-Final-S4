@@ -68,6 +68,12 @@
                             <span class="text nav-text">Simulations</span>
                         </a>
                     </li>
+                  <li class="nav-link">
+                        <a href="../admin/fond_disponible.php">
+                            <i class='bx bx-chart'></i>
+                            <span class="text nav-text">Fonds Disponibles</span>
+                         </a>
+                    </li>
                     <li class="nav-link">
                         <a href="../admin/simulation.php">
                             <i class='bx bx-transfer-alt icon'></i>
