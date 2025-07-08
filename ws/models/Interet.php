@@ -62,7 +62,14 @@ class Interet  {
 
         $capital = $data_pret['montant'];
         $taux = $type_pret['taux'] / 100 / 12;
-        $duree_mois = $type_pret['duree_mois'];
+
+        // Calcul de la durée réelle en mois entre date_pret et date_retour
+        $date_pret = new DateTime($data_pret['date_pret']);
+        $date_retour = new DateTime($data_pret['date_retour']);
+        $interval = $date_pret->diff($date_retour);
+        $duree_mois = ($interval->y * 12) + $interval->m;
+        if ($interval->d > 0) $duree_mois++; // arrondir au mois supérieur si jours restants
+
         $assurance = ($data_pret['assurance'] / 100 / 12) * $capital;
 
         error_log("Paramètres: Capital=$capital, Taux=$taux, Durée=$duree_mois mois, Assurance=$assurance");
@@ -76,7 +83,6 @@ class Interet  {
         error_log("Annuité calculée: $annuite");
 
         $capital_restant = $capital;
-        $date_pret = new DateTime($data_pret['date_pret']);
 
         for ($mois = 1; $mois <= $duree_mois; $mois++) {
             error_log("--- MOIS $mois ---");

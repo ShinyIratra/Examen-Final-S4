@@ -29,7 +29,7 @@ class ObjetController {
         $id = Objet::insert($data, $this->nom_table, $this->champs);
 
         if ($this->nom_table == 'ef_pret') {
-            $data_array = (array) $data; // Convertir en array pour la méthode
+            $data_array = $data->getData(); // <-- la bonne méthode pour avoir un array associatif
             Interet::calculerRemboursement($id, $data_array);
         }
         Flight::json(['message' => 'Ajouté', 'id' => $id]);
