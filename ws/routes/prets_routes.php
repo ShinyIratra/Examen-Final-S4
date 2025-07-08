@@ -18,6 +18,8 @@ Flight::route('GET /prets/tri/@ordre', function($ordre) use ($PretsController) {
 });
 Flight::route('GET /prets/invalides/desc', [$PretsController, 'getPretInvalideById']);
 Flight::route('GET /prets/@id', [$PretsController, 'getById']);
+Flight::route('GET /prets/user/@id', [$PretsController, 'getPretValideByUser']);
+Flight::route('GET /prets/pdf/@id', [$PretsController, 'pretPdf']); // Add this new route
 Flight::route('POST /prets', [$PretsController, 'create']);
 Flight::route('POST /prets/valide/@id', [$PretsController, 'validePret']);
 Flight::route('PUT /prets/@id', [$PretsController, 'update']);

@@ -51,9 +51,9 @@
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="../admin/pdf_client.php">
                             <i class='bx bx-wallet icon' ></i>
-                            <span class="text nav-text">Wallets</span>
+                            <span class="text nav-text">PDF Pret</span>
                         </a>
                     </li>
                 </ul>
