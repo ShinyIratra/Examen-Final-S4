@@ -1,14 +1,10 @@
 <?php
-require_once __DIR__ . '/../controllers/ObjetController.php';
+require_once __DIR__ . '/../controllers/UtilisateurController.php';
 
-$UtilisateurController = new ObjetController('EF_utilisateur', 'id_utilisateur', [
-    'nom' => '',
-    'mdp' => '',
-    'identifiant' => ''
-]);
+$UtilisateurController = new UtilisateurController();
 
-Flight::route('GET /utilisateur', [$UtilisateurController, 'getAll']);
-Flight::route('GET /utilisateur/@id', [$UtilisateurController, 'getById']);
-Flight::route('POST /utilisateur', [$UtilisateurController, 'create']);
-Flight::route('PUT /utilisateur/@id', [$UtilisateurController, 'update']);
-Flight::route('DELETE /utilisateur/@id', [$UtilisateurController, 'delete']);
+Flight::route('GET /utilisateurs', [$UtilisateurController, 'getAll']);
+Flight::route('GET /utilisateurs/@id', [$UtilisateurController, 'getById']);
+Flight::route('POST /utilisateurs', [$UtilisateurController, 'create']);
+Flight::route('PUT /utilisateurs/@id', [$UtilisateurController, 'update']);
+Flight::route('DELETE /utilisateurs/@id', [$UtilisateurController, 'delete']);

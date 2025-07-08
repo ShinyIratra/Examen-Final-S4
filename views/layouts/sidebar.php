@@ -8,7 +8,7 @@
                 </span>
                 <div class="text logo-text">
                     <span class="name">FinanceHub</span>
-                    <span class="profession">Gestion Bancaire</span>
+                    <span class="profession">ETU003264 - ETU003332</span>
                 </div>
             </div>
             <i class='bx bx-chevron-right toggle'></i>
@@ -70,7 +70,7 @@
                     </li>
                   <li class="nav-link">
                         <a href="../admin/fond_disponible.php">
-                            <i class='bx bx-chart'></i>
+                            <i class='bx bx-chart icon'></i>
                             <span class="text nav-text">Fonds Disponibles</span>
                          </a>
                     </li>
@@ -83,12 +83,6 @@
                 </ul>
             </div>
             <div class="bottom-content">
-                <li class="">
-                    <a href="#">
-                        <i class='bx bx-log-out icon'></i>
-                        <span class="text nav-text">Logout</span>
-                    </a>
-                </li>
                 <li class="mode">
                     <div class="sun-moon">
                         <i class='bx bx-moon icon moon'></i>
