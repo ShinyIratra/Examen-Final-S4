@@ -177,7 +177,7 @@
           data.forEach(e => {
             const option = document.createElement("option");
             option.value = e.id_pret;
-            option.textContent = `Prêt #${e.id_pret} - ${e.montant}€ (Client: ${e.id_client})`;
+            option.textContent = `Prêt #${e.id_pret} - ${e.montant}Ar (Client: ${e.id_client})`;
             select.appendChild(option);
           });
           

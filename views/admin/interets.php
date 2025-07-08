@@ -122,7 +122,7 @@
           options: {
             scales: {
               x: { title: { display: true, text: 'Mois' } },
-              y: { title: { display: true, text: 'Intérêts (€)' }, beginAtZero: true }
+              y: { title: { display: true, text: 'Intérêts (Ar)' }, beginAtZero: true }
             }
           }
         });

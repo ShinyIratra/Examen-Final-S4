@@ -129,19 +129,19 @@
     <div class="summary-cards">
       <div class="summary-card">
         <h3>Total Actuel</h3>
-        <div class="amount" id="total-actuel">0.00 €</div>
+        <div class="amount" id="total-actuel">0.00 Ar</div>
       </div>
       <div class="summary-card">
         <h3>Dépôts du mois</h3>
-        <div class="amount" id="depots-mois">0.00 €</div>
+        <div class="amount" id="depots-mois">0.00 Ar</div>
       </div>
       <div class="summary-card">
         <h3>Prêts du mois</h3>
-        <div class="amount" id="prets-mois">0.00 €</div>
+        <div class="amount" id="prets-mois">0.00 Ar</div>
       </div>
       <div class="summary-card">
         <h3>Remboursements du mois</h3>
-        <div class="amount" id="remboursements-mois">0.00 €</div>
+        <div class="amount" id="remboursements-mois">0.00 Ar</div>
       </div>
     </div>
 
@@ -272,7 +272,7 @@
           let cumulativeCell = '';
           if (currentView === 'cumule' && e.montant_cumule !== undefined) {
             const cumulativeClass = e.montant_cumule >= 0 ? 'montant-positif' : 'montant-negatif';
-            cumulativeCell = `<td class="cumule-cell ${cumulativeClass}">${parseFloat(e.montant_cumule).toFixed(2)} €</td>`;
+            cumulativeCell = `<td class="cumule-cell ${cumulativeClass}">${parseFloat(e.montant_cumule).toFixed(2)} Ar</td>`;
           } else {
             cumulativeCell = `<td class="cumule-cell" style="display: none;"></td>`;
           }
@@ -280,10 +280,10 @@
           tr.innerHTML = `
             <td>${e.annee}</td>
             <td>${moisNom}</td>
-            <td>${parseFloat(e.total_depots).toFixed(2)} €</td>
-            <td>${parseFloat(e.total_prets).toFixed(2)} €</td>
-            <td>${parseFloat(e.total_remboursements).toFixed(2)} €</td>
-            <td class="${montantClass}">${parseFloat(e.montant_disponible).toFixed(2)} €</td>
+            <td>${parseFloat(e.total_depots).toFixed(2)} Ar</td>
+            <td>${parseFloat(e.total_prets).toFixed(2)} Ar</td>
+            <td>${parseFloat(e.total_remboursements).toFixed(2)} Ar</td>
+            <td class="${montantClass}">${parseFloat(e.montant_disponible).toFixed(2)} Ar</td>
             ${cumulativeCell}
           `;
           tbody.appendChild(tr);
@@ -303,10 +303,10 @@
         });
         
         // Mettre à jour les cartes de résumé
-        document.getElementById('total-actuel').textContent = totalActuel.toFixed(2) + ' €';
-        document.getElementById('depots-mois').textContent = depotsMoisActuel.toFixed(2) + ' €';
-        document.getElementById('prets-mois').textContent = pretsMoisActuel.toFixed(2) + ' €';
-        document.getElementById('remboursements-mois').textContent = remboursementsMoisActuel.toFixed(2) + ' €';
+        document.getElementById('total-actuel').textContent = totalActuel.toFixed(2) + ' Ar';
+        document.getElementById('depots-mois').textContent = depotsMoisActuel.toFixed(2) + ' Ar';
+        document.getElementById('prets-mois').textContent = pretsMoisActuel.toFixed(2) + ' Ar';
+        document.getElementById('remboursements-mois').textContent = remboursementsMoisActuel.toFixed(2) + ' Ar';
         
         // Remplir les années dans le select
         const anneesUniques = [...new Set(data.map(e => e.annee))];
@@ -395,7 +395,7 @@
               beginAtZero: true,
               title: {
                 display: true,
-                text: 'Montant (€)'
+                text: 'Montant (Ar)'
               }
             },
             x: {
